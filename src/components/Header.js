@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 
 const Header = (props) => {
   const getLastOpenedSection = () => {
-    return props.lastOpenedSection ? props.lastOpenedSection : 'laboratory_equipment';
+    return props.lastOpenedSection ? props.lastOpenedSection : 'equipment';
   }
 
   return (

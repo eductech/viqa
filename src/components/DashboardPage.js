@@ -12,25 +12,25 @@ const DashboardPage = ({ match, sectionChange }) => {
       <ul>
         <li>
           <NavLink  
-            to={`${match.url}/laboratory_equipment`} 
+            to={`${match.url}/equipment`} 
             activeClassName="selected">
             One
           </NavLink>
         </li>
         <li>
           <NavLink 
-            to={`${match.url}/laboratory_scope`} 
+            to={`${match.url}/scope`} 
             activeClassName="selected">
             Two
           </NavLink>
         </li>
       </ul>
       <Route 
-        path={`${match.url}/laboratory_equipment`}
+        path={`${match.url}/equipment`}
         render={(props) => <One {...props} sectionChange={sectionChange}/>}
       />
       <Route 
-        path={`${match.url}/laboratory_scope`}  
+        path={`${match.url}/scope`}  
         render={(props) => <Two {...props} sectionChange={sectionChange}/>}
       />
     </div>

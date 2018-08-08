@@ -2,7 +2,7 @@ import React from "react";
 
 class Two extends React.Component {
   componentDidMount() {
-    this.props.sectionChange('laboratory_scope');
+    this.props.sectionChange('scope');
   }
 
   render() {

@@ -2,7 +2,7 @@ import React from "react";
 
 class One extends React.Component {
   componentDidMount() {
-    this.props.sectionChange('laboratory_equipment');
+    this.props.sectionChange('equipment');
   }
 
   render() {
