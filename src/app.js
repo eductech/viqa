@@ -1,8 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-//styles
+// app router
+import AppRouter from './router/AppRouter';
+
+// styles
 import 'normalize.css/normalize.css';
 import './styles/styles.scss';
 
-ReactDOM.render(<p>hello</p>, document.getElementById('app'));
+ReactDOM.render(<AppRouter />, document.getElementById('app'));
