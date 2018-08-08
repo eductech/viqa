@@ -4,7 +4,7 @@ import { BrowserRouter, Switch, Route } from "react-router-dom";
 // components
 import Header from "../components/Header";
 import HomePage from "../components/HomePage";
-import EquipmentList from "../components/EquipmentList";
+import DashboardPage from "../components/DashboardPage";
 import Page404 from "../components/Page404";
 
 const AppRouter = () => (
@@ -13,7 +13,7 @@ const AppRouter = () => (
       <Header />
       <Switch>
         <Route exact path='/' component={HomePage} />
-        <Route path='/dashboard' component={EquipmentList} />
+        <Route path='/dashboard' component={DashboardPage} />
         <Route component={Page404} />
       </Switch>
     </div>
