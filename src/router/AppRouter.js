@@ -7,17 +7,35 @@ import HomePage from "../components/HomePage";
 import DashboardPage from "../components/DashboardPage";
 import Page404 from "../components/Page404";
 
-const AppRouter = () => (
-  <BrowserRouter>
-    <div>
-      <Header />
-      <Switch>
-        <Route exact path='/' component={HomePage} />
-        <Route path='/dashboard' component={DashboardPage} />
-        <Route component={Page404} />
-      </Switch>
-    </div>
-  </BrowserRouter>
-);
+class AppRouter extends React.Component {
+  state = {
+    lastOpenedSection: ''
+  }
+
+  onLastOpenedSectionChange = (sectionName) => {
+    console.log(sectionName);
+    this.setState({lastOpenedSection: sectionName});
+  }
+
+  render() {
+    return (
+      <BrowserRouter>
+        <div>
+          <Header 
+            lastOpenedSection={this.state.lastOpenedSection} 
+          />
+          <Switch>
+            <Route exact path='/' component={HomePage} />
+            <Route 
+              path='/dashboard' 
+              render={(props) => <DashboardPage {...props} sectionChange={this.onLastOpenedSectionChange}/>} 
+            />
+            <Route component={Page404} />
+          </Switch>
+        </div>
+      </BrowserRouter>
+    );
+  };
+} 
 
 export default AppRouter;

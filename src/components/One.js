@@ -1,7 +1,15 @@
 import React from "react";
 
-const One = () => (
-  <p>this is one</p>
-);
+class One extends React.Component {
+  componentDidMount() {
+    this.props.sectionChange('laboratory_equipment');
+  }
+
+  render() {
+    return (
+      <p>this is one</p>
+    );
+  }
+}
 
 export default One;

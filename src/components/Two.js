@@ -1,7 +1,15 @@
 import React from "react";
 
-const Two = () => (
-  <p>this is two</p>
-);
+class Two extends React.Component {
+  componentDidMount() {
+    this.props.sectionChange('laboratory_scope');
+  }
+
+  render() {
+    return (
+      <p>this is two</p>
+    );
+  }
+}
 
 export default Two;

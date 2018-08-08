@@ -1,14 +1,23 @@
 import React from 'react';
 import { NavLink } from "react-router-dom";
 
-const Header = () => {
+const Header = (props) => {
+  const getLastOpenedSection = () => {
+    return props.lastOpenedSection ? props.lastOpenedSection : 'laboratory_equipment';
+  }
+
   return (
     <header>
       <h1>VIQA</h1>
       <NavLink exact to="/" activeClassName="selected">home</NavLink>
-      <NavLink to="/dashboard" activeClassName="selected">dashboard</NavLink>
+      <NavLink 
+        to={`/dashboard/${getLastOpenedSection()}`} 
+        activeClassName="selected">
+        dashboard
+      </NavLink>
     </header>
   );
+
 }
 
 export default Header;
