@@ -10,10 +10,18 @@ const DashboardPage = ({ match }) => {
     <div>
       <ul>
         <li>
-          <NavLink to={`${match.url}/laboratory_equipment`}>One</NavLink>
+          <NavLink  
+            to={`${match.url}/laboratory_equipment`} 
+            activeClassName="selected">
+            One
+          </NavLink>
         </li>
         <li>
-          <NavLink to={`${match.url}/laboratory_scope`}>Two</NavLink>
+          <NavLink 
+            to={`${match.url}/laboratory_scope`} 
+            activeClassName="selected">
+            Two
+          </NavLink>
         </li>
       </ul>
       <Route path={`${match.url}/laboratory_equipment`} component={One} />
