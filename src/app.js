@@ -17,8 +17,8 @@ import './styles/styles.scss';
 const store = configureStore();
 
 /* TEST CODE */
-store.dispatch(addEquipment({title: 'Press', invNo: 5}));
-store.dispatch(addEquipment({title: 'Press', invNo: 5}));
+store.dispatch(addEquipment({title: 'Press1', invNo: 5}));
+store.dispatch(addEquipment({title: 'Press2', invNo: 5}));
 
 /* TEST CODE */
 
