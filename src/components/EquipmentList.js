@@ -1,15 +1,15 @@
 import React from "react";
 
-class One extends React.Component {
+class EquipmentList extends React.Component {
   componentDidMount() {
     this.props.sectionChange('equipment');
   }
 
   render() {
     return (
-      <p>this is one</p>
+      <p>this is EquipmentList</p>
     );
   }
 }
 
-export default One;
+export default EquipmentList;
