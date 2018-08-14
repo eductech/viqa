@@ -2,7 +2,7 @@ import React from "react";
 import { Route, NavLink } from "react-router-dom";
 
 // components
-import One from "./One";
+import EquipmentList from "./EquipmentList";
 import Two from "./Two";
 
 const DashboardPage = ({ match, sectionChange }) => {
@@ -14,7 +14,7 @@ const DashboardPage = ({ match, sectionChange }) => {
           <NavLink  
             to={`${match.url}/equipment`} 
             activeClassName="selected">
-            One
+            Equipment
           </NavLink>
         </li>
         <li>
@@ -27,7 +27,7 @@ const DashboardPage = ({ match, sectionChange }) => {
       </ul>
       <Route 
         path={`${match.url}/equipment`}
-        render={(props) => <One {...props} sectionChange={sectionChange}/>}
+        render={(props) => <EquipmentList {...props} sectionChange={sectionChange}/>}
       />
       <Route 
         path={`${match.url}/scope`}  
