@@ -1,16 +1,32 @@
+import database from '../firebase/firebase';
+
 // ADD_EQUIPMENT
-export const addEquipment = ({
+const addEquipment = (equipment) => {
+  return {
+    type: 'ADD_EQUIPMENT',
+    equipment
+  };
+}
+
+
+export const startAddEquipment = ({
   title = '',
   invNo = Math.random() * 10000
 } = {}) => {
-  return {
-    type: 'ADD_EQUIPMENT',
-    equipment: {
-      title,
-      invNo
-    }
+  return (dispatch) => {
+    const equipment = {title, invNo};
+    
+    database.ref('equipment').push(equipment).then(
+      (ref) => {
+        dispatch(addEquipment({
+          invNo: equipment.invNo,
+          title: equipment.title
+        }));
+      }
+    );
   }
-}
+};
+
 
 // REMOVE_EQUIPMENT
 
