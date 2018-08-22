@@ -3,7 +3,12 @@ import { connect } from "react-redux";
 import Modal from 'react-modal';
 
 import { showAuthorizationModal } from "../actions/sessionSettingsActions";
-import { startCreateUserWithEmailAndPassword } from '../actions/auth';
+import { 
+  startCreateUserWithEmailAndPassword,
+  startSignInWithEmailAndPassword,
+  startSignInWithGoogleProvider,
+  startSignInWithGitHubProvider
+} from '../actions/auth';
 
 class AuthorizationModal extends React.Component {
   state = {
@@ -31,16 +36,18 @@ class AuthorizationModal extends React.Component {
 
   onSubmitForExistingUser = (e) => {
     e.preventDefault();
-    console.log("existin user us trying to enter");
+    this.props.startSignIn(
+      this.state.mail,
+      this.state.password
+    );
     this.props.closeModal();
   }
 
-  onChangeToSignupMode = () => {
-    this.setState({registration: true});
-  }
-
-  onChangeToSigninMode = () => {
-    this.setState({registration: false});
+  onShowRegistrationForm = (registration) => {
+    return () => {
+      console.log('registration: ' + registration);
+      this.setState({registration});
+    }
   }
 
   render() {
@@ -52,10 +59,10 @@ class AuthorizationModal extends React.Component {
         closeTimeoutMS={200}
         className="authorization-modal"
       >
-        <button onClick={this.onChangeToSignupMode}>
+        <button onClick={this.onShowRegistrationForm(true)}>
           Sign Up
         </button>
-        <button onClick={this.onChangeToSigninMode}>
+        <button onClick={this.onShowRegistrationForm(false)}>
           Sigh In
         </button>
         <form onSubmit={
@@ -74,6 +81,8 @@ class AuthorizationModal extends React.Component {
           />
           <button>Confirm</button>
         </form>
+        <button onClick={this.props.startSignInWithGoogle}>Sign In With Google Account</button>
+        <button onClick={this.props.startSignInWithGitHub}>Sign In With GitHub Account</button>
       </Modal>
     )
   }
@@ -88,7 +97,10 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     closeModal: () => dispatch(showAuthorizationModal(false)),
-    createUser: (email, password) => dispatch(startCreateUserWithEmailAndPassword(email, password))
+    createUser: (email, password) => dispatch(startCreateUserWithEmailAndPassword(email, password)),
+    startSignIn: (email, password) => dispatch(startSignInWithEmailAndPassword(email, password)),
+    startSignInWithGoogle: () => dispatch(startSignInWithGoogleProvider()),
+    startSignInWithGitHub: () => dispatch(startSignInWithGitHubProvider())
   }
 }
 
