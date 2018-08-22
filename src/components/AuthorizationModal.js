@@ -6,6 +6,10 @@ import { showAuthorizationModal } from "../actions/sessionSettingsActions";
 import { startCreateUserWithEmailAndPassword } from '../actions/auth';
 
 class AuthorizationModal extends React.Component {
+  state = {
+    registration: true
+  }
+
   onMailChange = (e) => {
     const mail = e.target.value;
     this.setState({mail});
@@ -16,13 +20,27 @@ class AuthorizationModal extends React.Component {
     this.setState({password});
   }
 
-  onSubmit = (e) => {
+  onSubmitForNewUser = (e) => {
     e.preventDefault();
     this.props.createUser(
       this.state.mail,
       this.state.password
     );
     this.props.closeModal();
+  }
+
+  onSubmitForExistingUser = (e) => {
+    e.preventDefault();
+    console.log("existin user us trying to enter");
+    this.props.closeModal();
+  }
+
+  onChangeToSignupMode = () => {
+    this.setState({registration: true});
+  }
+
+  onChangeToSigninMode = () => {
+    this.setState({registration: false});
   }
 
   render() {
@@ -34,9 +52,15 @@ class AuthorizationModal extends React.Component {
         closeTimeoutMS={200}
         className="authorization-modal"
       >
-        <button>Sign Up</button>
-        <button>Sigh In</button>
-        <form onSubmit={this.onSubmit}>
+        <button onClick={this.onChangeToSignupMode}>
+          Sign Up
+        </button>
+        <button onClick={this.onChangeToSigninMode}>
+          Sigh In
+        </button>
+        <form onSubmit={
+          this.state.registration ? this.onSubmitForNewUser : this.onSubmitForExistingUser 
+        }>
           <input 
             autoFocus 
             type="text" 
