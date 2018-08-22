@@ -14,7 +14,7 @@ const HomePage = (props) => {
       >
         Sign Out
       </button>
-      {/* <AuthorizationModal /> */}
+      <AuthorizationModal />
     </div>
   );
 }
