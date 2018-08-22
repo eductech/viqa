@@ -12,13 +12,12 @@ import { startAddEquipment } from './actions/equipmentActions'
 
 // styles
 import 'normalize.css/normalize.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
- /* bootstrap js
-  import $ from 'jquery';
-  import Popper from 'popper.js';
-  import 'bootstrap/dist/js/bootstrap.bundle.min';
-*/
 import './styles/styles.scss';
+import $ from 'jquery';
+import Popper from 'popper.js';
+import 'bootstrap/dist/js/bootstrap.bundle.min';
+
+// firebase
 
 const store = configureStore();
 

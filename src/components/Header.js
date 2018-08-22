@@ -1,5 +1,6 @@
 import React from 'react';
 import { NavLink } from "react-router-dom";
+import { connect } from "react-redux";
 
 const Header = (props) => {
   const getLastOpenedSection = () => {
@@ -19,16 +20,22 @@ const Header = (props) => {
           home
         </NavLink>
         <NavLink 
-          to={`/dashboard/${getLastOpenedSection()}`} 
+          to={`/dashboard/${props.lastOpenedList}`} 
           activeClassName="selected"
           className="p-2 text-dark"
         >
           dashboard
         </NavLink>
       </nav>
+      <a className="btn btn-outline-primary" href="#">Sign up / Sign in</a>
     </header>
   );
-
 }
 
-export default Header;
+const mapStateToProps = (state) => {
+  return {
+    lastOpenedList: state.sessionSettings.lastOpenedList
+  }
+}
+
+export default connect(mapStateToProps)(Header);

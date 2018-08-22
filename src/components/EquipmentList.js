@@ -1,13 +1,10 @@
 import React from "react";
 import { connect } from 'react-redux';
+import { changeLastOpenedList } from "../actions/sessionSettingsActions";
 
 class EquipmentList extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   componentDidMount() {
-    this.props.sectionChange('equipment');
+    this.props.changeLastOpenedList();
   }
 
   render() {
@@ -32,4 +29,10 @@ const mapStateToProps = (state) => {
   }
 };
 
-export default connect(mapStateToProps)(EquipmentList);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    changeLastOpenedList: () => dispatch(changeLastOpenedList('equipment'))
+  }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(EquipmentList);

@@ -1,9 +1,5 @@
-// equipment reducer default state
-const equipmentReducerDefaultState = [];
-
-// equipment reducer function
 const equipmentReducer = (
-state = equipmentReducerDefaultState,
+state = [],
 action) => {
   switch (action.type) {
     case 'ADD_EQUIPMENT':
