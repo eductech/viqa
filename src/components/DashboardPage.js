@@ -1,9 +1,10 @@
 import React from "react";
-import { Route, NavLink } from "react-router-dom";
+import { Route, NavLink, Switch } from "react-router-dom";
 
 // components
 import EquipmentList from "./EquipmentList";
 import ScopeList from "./ScopeList";
+import Page404 from "./Page404";
 
 const DashboardPage = ({ match, sectionChange }) => {
   return (

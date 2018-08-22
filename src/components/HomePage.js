@@ -1,10 +1,12 @@
 import React from "react";
+import AuthorizationModal from "./AuthorizationModal";
 
 const HomePage = () => {
   return (
-    <p>
-      this is home
-    </p>
+    <div>
+      <p>this is home</p>
+      <AuthorizationModal />
+    </div>
   );
 }
 

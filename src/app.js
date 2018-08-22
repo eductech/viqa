@@ -18,19 +18,28 @@ import Popper from 'popper.js';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
 
 // firebase
+import { firebase } from "./firebase/firebase";
 
 const store = configureStore();
 
 /* TEST CODE */
 store.dispatch(startAddEquipment({title: 'Press1', invNo: 5}));
 store.dispatch(startAddEquipment({title: 'Press2', invNo: 5}));
-
 /* TEST CODE */
-
-ReactDOM.render((
-    <Provider store={store}>
-      <AppRouter />
-    </Provider>
-  ),
-  document.getElementById('app')
+const jsx = (
+  <Provider store={store}>
+    <AppRouter />
+  </Provider>
 );
+let hasRendered = false;
+const renderApp = () => {
+  if (!hasRendered) {
+    ReactDOM.render(jsx, document.getElementById('app'));
+    hasRendered = true;
+  }
+};
+ReactDOM.render(<p>Loading...</p>, document.getElementById('app'));
+firebase.auth().onAuthStateChanged((user) => {
+  renderApp();
+  console.log(user);
+});

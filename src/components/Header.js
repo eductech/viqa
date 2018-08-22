@@ -1,15 +1,12 @@
 import React from 'react';
 import { NavLink } from "react-router-dom";
 import { connect } from "react-redux";
+import { showAuthorizationModal } from "../actions/sessionSettingsActions";
 
 const Header = (props) => {
-  const getLastOpenedSection = () => {
-    return props.lastOpenedSection ? props.lastOpenedSection : 'equipment';
-  }
-
   return (
     <header className="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
-      <h1 className="my-0 mr-md-auto font-weight-normal">VIQA</h1>
+      <h3 className="my-0 mr-md-auto font-weight-normal">VIQA</h3>
       <nav className="my-2 my-md-0 mr-md-3">
         <NavLink 
           exact 
@@ -27,7 +24,12 @@ const Header = (props) => {
           dashboard
         </NavLink>
       </nav>
-      <a className="btn btn-outline-primary" href="#">Sign up / Sign in</a>
+      <button 
+        className="btn btn-outline-primary"
+        onClick={props.showAuthorizationModal}
+      >
+        Sign up / Sign in
+      </button>
     </header>
   );
 }
@@ -38,4 +40,10 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps)(Header);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    showAuthorizationModal: () => dispatch(showAuthorizationModal(true))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Header);

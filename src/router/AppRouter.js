@@ -15,7 +15,7 @@ class AppRouter extends React.Component {
           <Header />
           <Switch>
             <Route exact path='/' component={HomePage} />
-            <Route path='/dashboard' component={DashboardPage}/>} />
+            <Route path='/dashboard' component={DashboardPage}/>
             <Route component={Page404} />
           </Switch>
         </div>

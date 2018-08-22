@@ -5,3 +5,11 @@ export const changeLastOpenedList = (lastOpenedList) => {
     lastOpenedList
   }
 }
+
+// SHOW_AUTHORIZATION_MODAL
+export const showAuthorizationModal = (modalVisibility) => {
+  return {
+    type: 'SHOW_AUTHORIZATION_MODAL',
+    modalVisibility
+  }
+}
