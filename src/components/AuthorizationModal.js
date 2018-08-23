@@ -25,22 +25,17 @@ class AuthorizationModal extends React.Component {
     this.setState({password});
   }
 
-  onSubmitForNewUser = (e) => {
-    e.preventDefault();
-    this.props.createUser(
-      this.state.mail,
-      this.state.password
-    );
-    this.props.closeModal();
-  }
-
-  onSubmitForExistingUser = (e) => {
-    e.preventDefault();
-    this.props.startSignIn(
-      this.state.mail,
-      this.state.password
-    );
-    this.props.closeModal();
+  onSubmitHandler = (registration) => {
+    const submitHandler = registration ? 
+      this.props.createUser : this.props.startSignIn;
+    return (e) => {
+      e.preventDefault();
+      submitHandler(
+        this.state.mail,
+        this.state.password
+      );
+      this.props.closeModal();
+    }
   }
 
   onShowRegistrationForm = (registration) => {
@@ -65,9 +60,8 @@ class AuthorizationModal extends React.Component {
         <button onClick={this.onShowRegistrationForm(false)}>
           Sigh In
         </button>
-        <form onSubmit={
-          this.state.registration ? this.onSubmitForNewUser : this.onSubmitForExistingUser 
-        }>
+        <p></p>
+        <form onSubmit={this.onSubmitHandler(this.state.registration)}>
           <input 
             autoFocus 
             type="text" 
@@ -94,7 +88,7 @@ const mapStateToProps = (state) => {
   }
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = (dispatch, props) => {
   return {
     closeModal: () => dispatch(showAuthorizationModal(false)),
     createUser: (email, password) => dispatch(startCreateUserWithEmailAndPassword(email, password)),
