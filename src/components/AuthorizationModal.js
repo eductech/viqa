@@ -15,12 +15,22 @@ import {
 
 class AuthorizationModal extends React.Component {
   state = {
-    registration: true
+    registration: true,
+    mail: '',
+    password: '',
+    mailValidationErrMsg: 'please enter your email',
+    passwordValidationErrMsg: ''
   }
 
   onMailChange = (e) => {
     const mail = e.target.value;
-    this.setState({mail});
+    if (!mail) {
+      this.setState({mailValidationErrMsg: 'please enter your email', mail});
+    } else if (!mail.match(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)) {
+      this.setState({mailValidationErrMsg: 'email must be valid', mail});
+    } else {
+      this.setState({mailValidationErrMsg: '', mail});
+    }
   }
 
   onPasswordChange = (e) => {
