@@ -1,6 +1,9 @@
 import React from 'react';
 import { connect } from "react-redux";
 import Modal from 'react-modal';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faGoogle, faGithub } from "@fortawesome/free-brands-svg-icons";
+import { faTimes } from "@fortawesome/free-solid-svg-icons";
 
 import { showAuthorizationModal } from "../actions/sessionSettingsActions";
 import { 
@@ -54,29 +57,73 @@ class AuthorizationModal extends React.Component {
         closeTimeoutMS={200}
         className="authorization-modal"
       >
-        <button onClick={this.onShowRegistrationForm(true)}>
-          Sign Up
+        <button 
+          onClick={this.props.closeModal} 
+          className="authorization-modal__btn-close btn btn-link btn-lg"
+        >
+          <FontAwesomeIcon icon={faTimes} className=""/>
         </button>
-        <button onClick={this.onShowRegistrationForm(false)}>
-          Sigh In
-        </button>
-        <p></p>
+        <div className="d-flex justify-content-around">
+          <button 
+            className={
+                        `btn btn-outline-primary btn-block mx-4 
+                        ${this.state.registration ? 'active' : ''}`
+                      }
+            onClick={this.onShowRegistrationForm(true)}
+          >
+            Sign Up
+          </button>
+          <button 
+            className={
+                        `btn btn-outline-primary btn-block mt-0 mx-4 
+                        ${this.state.registration ? '' : 'active'}`
+                      }
+            onClick={this.onShowRegistrationForm(false)}
+          >
+            Sigh In
+          </button>
+        </div>
+        <p className="text-center mt-3">
+          choose the way you want to <span className="font-weight-bold">{this.state.registration ? 'sign up' : 'sign in'}</span>
+        </p>
+        <div className="btn-group-vertical w-100">
+          <button 
+            className="btn btn-success"
+            onClick={this.props.startSignInWithGoogle}
+          >
+            <FontAwesomeIcon icon={faGoogle} className="mr-2"/>
+            {this.state.registration ? 'Sign Up' : 'Sign In'} With Google
+          </button>
+          <button 
+            className="btn btn-warning"
+            onClick={this.props.startSignInWithGitHub}
+          >
+            <FontAwesomeIcon icon={faGithub} className="mr-2"/>
+            {this.state.registration ? 'Sign Up' : 'Sign In'} With GitHub
+          </button>
+        </div>
+        <p className="text-center my-1">
+          or
+        </p>
         <form onSubmit={this.onSubmitHandler(this.state.registration)}>
-          <input 
-            autoFocus 
-            type="text" 
-            placeholder="your mail"
-            onChange={this.onMailChange}
-          />
-          <input 
-            type="text" 
-            placeholder="your password"
-            onChange={this.onPasswordChange}
-          />
-          <button>Confirm</button>
+          <div className="form-group">
+            <input 
+              className="form-control"
+              autoFocus type="text" placeholder="enter mail"
+              onChange={this.onMailChange}
+            />
+          </div>
+          <div className="form-group">
+            <input 
+              className="form-control"
+              type="text" placeholder="enter password"
+              onChange={this.onPasswordChange}
+            />
+          </div>
+          <button type="submit" className="btn btn-primary ">
+            {this.state.registration ? 'Sign Up' : 'Sign In'}
+          </button>
         </form>
-        <button onClick={this.props.startSignInWithGoogle}>Sign In With Google Account</button>
-        <button onClick={this.props.startSignInWithGitHub}>Sign In With GitHub Account</button>
       </Modal>
     )
   }

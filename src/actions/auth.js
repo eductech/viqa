@@ -65,9 +65,7 @@ const handleAcountExistsWithDifferentCredentialError = (err) => {
       });
       return;
     }
-    // TODO: implement getProviderForProviderId.
-    var provider = googleAuthProvider;
-    return;
+    var provider = (methods.indexOf("google.com") > -1) ? googleAuthProvider : githubAuthProvider;
     firebase.auth().signInWithPopup(provider).then((result) => {
       result.user.linkAndRetrieveDataWithCredential(pendingCred).then((usercred) => {
         // Google account successfully linked to the existing Firebase user.

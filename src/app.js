@@ -23,8 +23,8 @@ import { firebase } from "./firebase/firebase";
 const store = configureStore();
 
 /* TEST CODE */
-store.dispatch(startAddEquipment({title: 'Press1', invNo: 5}));
-store.dispatch(startAddEquipment({title: 'Press2', invNo: 5}));
+// store.dispatch(startAddEquipment({title: 'Press1', invNo: 5}));
+// store.dispatch(startAddEquipment({title: 'Press2', invNo: 5}));
 /* TEST CODE */
 const jsx = (
   <Provider store={store}>
