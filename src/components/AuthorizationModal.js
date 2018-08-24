@@ -41,6 +41,12 @@ class AuthorizationModal extends React.Component {
     }
   }
 
+  onContinueHandler = () => {
+    return () => {
+      this.props.startSignInWithGoogle(this.props.pendingCredInfo)
+    }
+  }
+
   onShowRegistrationForm = (registration) => {
     return () => {
       console.log('registration: ' + registration);
@@ -49,7 +55,7 @@ class AuthorizationModal extends React.Component {
   }
 
   render() {
-    return (
+    return ( 
       <Modal
         isOpen={this.props.modalVisibility}
         contentLabel="Authorization Modal"
@@ -57,73 +63,87 @@ class AuthorizationModal extends React.Component {
         closeTimeoutMS={200}
         className="authorization-modal"
       >
-        <button 
-          onClick={this.props.closeModal} 
-          className="authorization-modal__btn-close btn btn-link btn-lg"
-        >
-          <FontAwesomeIcon icon={faTimes} className=""/>
-        </button>
-        <div className="d-flex justify-content-around">
-          <button 
-            className={
-                        `btn btn-outline-primary btn-block mx-4 
-                        ${this.state.registration ? 'active' : ''}`
-                      }
-            onClick={this.onShowRegistrationForm(true)}
-          >
-            Sign Up
-          </button>
-          <button 
-            className={
-                        `btn btn-outline-primary btn-block mt-0 mx-4 
-                        ${this.state.registration ? '' : 'active'}`
-                      }
-            onClick={this.onShowRegistrationForm(false)}
-          >
-            Sigh In
-          </button>
-        </div>
-        <p className="text-center mt-3">
-          choose the way you want to <span className="font-weight-bold">{this.state.registration ? 'sign up' : 'sign in'}</span>
-        </p>
-        <div className="btn-group-vertical w-100">
-          <button 
-            className="btn btn-success"
-            onClick={this.props.startSignInWithGoogle}
-          >
-            <FontAwesomeIcon icon={faGoogle} className="mr-2"/>
-            {this.state.registration ? 'Sign Up' : 'Sign In'} With Google
-          </button>
-          <button 
-            className="btn btn-warning"
-            onClick={this.props.startSignInWithGitHub}
-          >
-            <FontAwesomeIcon icon={faGithub} className="mr-2"/>
-            {this.state.registration ? 'Sign Up' : 'Sign In'} With GitHub
-          </button>
-        </div>
-        <p className="text-center my-1">
-          or
-        </p>
-        <form onSubmit={this.onSubmitHandler(this.state.registration)}>
-          <div className="form-group">
-            <input 
-              className="form-control"
-              autoFocus type="text" placeholder="enter mail"
-              onChange={this.onMailChange}
-            />
+        { !this.props.pendingCredInfo ? (
+          <div>
+            <button 
+              onClick={this.props.closeModal} 
+              className="authorization-modal__btn-close btn btn-link btn-lg"
+            >
+              <FontAwesomeIcon icon={faTimes} className=""/>
+            </button>
+            <div className="d-flex justify-content-around">
+              <button 
+                className={
+                            `btn btn-outline-primary btn-block mx-4 
+                            ${this.state.registration ? 'active' : ''}`
+                          }
+                onClick={this.onShowRegistrationForm(true)}
+              >
+                Sign Up
+              </button>
+              <button 
+                className={
+                            `btn btn-outline-primary btn-block mt-0 mx-4 
+                            ${this.state.registration ? '' : 'active'}`
+                          }
+                onClick={this.onShowRegistrationForm(false)}
+              >
+                Sigh In
+              </button>
+            </div>
+            <p className="text-center mt-3">
+              choose the way you want to <span className="font-weight-bold">{this.state.registration ? 'sign up' : 'sign in'}</span>
+            </p>
+            <div className="btn-group-vertical w-100">
+              <button 
+                className="btn btn-success"
+                onClick={
+                  this.onContinueHandler()
+                }
+              >
+                <FontAwesomeIcon icon={faGoogle} className="mr-2"/>
+                {this.state.registration ? 'Sign Up' : 'Sign In'} With Google
+              </button>
+              <button 
+                className="btn btn-warning"
+                onClick={this.props.startSignInWithGitHub}
+              >
+                <FontAwesomeIcon icon={faGithub} className="mr-2"/>
+                {this.state.registration ? 'Sign Up' : 'Sign In'} With GitHub
+              </button>
+            </div>
+            <p className="text-center my-1">
+              or
+            </p>
+            <form onSubmit={this.onSubmitHandler(this.state.registration)}>
+              <div className="form-group">
+                <input 
+                  className="form-control"
+                  autoFocus type="text" placeholder="enter mail"
+                  onChange={this.onMailChange}
+                />
+              </div>
+              <div className="form-group">
+                <input 
+                  className="form-control"
+                  type="text" placeholder="enter password"
+                  onChange={this.onPasswordChange}
+                />
+              </div>
+              <button type="submit" className="btn btn-primary ">
+                {this.state.registration ? 'Sign Up' : 'Sign In'}
+              </button>
+            </form>
           </div>
-          <div className="form-group">
-            <input 
-              className="form-control"
-              type="text" placeholder="enter password"
-              onChange={this.onPasswordChange}
-            />
+        ) : (
+          <div>
+            <button onClick={
+              this.onContinueHandler()
+            }>
+              Continue
+            </button>
           </div>
-          <button type="submit" className="btn btn-primary ">
-            {this.state.registration ? 'Sign Up' : 'Sign In'}
-          </button>
-        </form>
+        )}
       </Modal>
     )
   }
@@ -131,7 +151,8 @@ class AuthorizationModal extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    modalVisibility: state.sessionSettings.showAuthorizationModal
+    modalVisibility: state.sessionSettings.showAuthorizationModal,
+    pendingCredInfo: state.auth.pendingCredInfo
   }
 };
 
@@ -140,7 +161,7 @@ const mapDispatchToProps = (dispatch, props) => {
     closeModal: () => dispatch(showAuthorizationModal(false)),
     createUser: (email, password) => dispatch(startCreateUserWithEmailAndPassword(email, password)),
     startSignIn: (email, password) => dispatch(startSignInWithEmailAndPassword(email, password)),
-    startSignInWithGoogle: () => dispatch(startSignInWithGoogleProvider()),
+    startSignInWithGoogle: (pendingCredInfo) => dispatch(startSignInWithGoogleProvider(pendingCredInfo)),
     startSignInWithGitHub: () => dispatch(startSignInWithGitHubProvider())
   }
 }

@@ -15,12 +15,19 @@ export const startSignInWithEmailAndPassword = (email, password) => {
 };
 
 // google authentication
-export const startSignInWithGoogleProvider = () => {
+export const startSignInWithGoogleProvider = (pendingCredInfo) => {
+  console.log('1', pendingCredInfo);
   return (dispatch) => {
-    return firebase.auth().signInWithPopup(googleAuthProvider)
-      .then(() => {
-        dispatch(showAuthorizationModal(false))
-      });
+    firebase.auth().signInWithPopup(googleAuthProvider).then((result) => {
+      if (pendingCredInfo) {
+        console.log('2', pendingCredInfo);
+        
+        result.user.linkAndRetrieveDataWithCredential(pendingCredInfo.pendingCred).then(() => {
+          dispatch(removePendingCredInfo())
+        });
+      // dispatch(showAuthorizationModal(false))
+      }
+    });
   }
 } 
 
@@ -29,11 +36,11 @@ export const startSignInWithGitHubProvider = () => {
   return (dispatch) => {
     firebase.auth().signInWithPopup(githubAuthProvider).catch((err) => {
       if (err.code === 'auth/account-exists-with-different-credential') {
-        handleAcountExistsWithDifferentCredentialError(err)
+        handleAcountExistsWithDifferentCredentialError(err, dispatch)
       }
     }).finally(
       () => {
-        dispatch(showAuthorizationModal(false))
+        // dispatch(showAuthorizationModal(false))
       }
     )
   }
@@ -51,7 +58,7 @@ export const startSignOut = () => {
 };
 
 // Handling account-exists-with-different-credential Errors
-const handleAcountExistsWithDifferentCredentialError = (err) => {
+const handleAcountExistsWithDifferentCredentialError = (err, dispatch) => {
   var pendingCred = err.credential;
   var email = err.email;
   firebase.auth().fetchSignInMethodsForEmail(email).then((methods) => {
@@ -66,11 +73,24 @@ const handleAcountExistsWithDifferentCredentialError = (err) => {
       return;
     }
     var provider = (methods.indexOf("google.com") > -1) ? googleAuthProvider : githubAuthProvider;
-    firebase.auth().signInWithPopup(provider).then((result) => {
-      result.user.linkAndRetrieveDataWithCredential(pendingCred).then((usercred) => {
-        // Google account successfully linked to the existing Firebase user.
-        // goToApp();
-      });
-    });
+    dispatch(addPendingCredInfo({provider, pendingCred}));
   });
 };
+
+// ADD_PENDING_CRED_INFO
+export const addPendingCredInfo = ({provider, pendingCred}) => {
+  return {
+    type: 'ADD_PENDING_CRED_INFO',
+    pendingCredInfo: {
+      provider,
+      pendingCred
+    }
+  }
+}
+
+// REMOVE_PENDING_CRED_INFO
+export const removePendingCredInfo = () => {
+  return {
+    type: 'REMOVE_PENDING_CRED_INFO'
+  }
+}
