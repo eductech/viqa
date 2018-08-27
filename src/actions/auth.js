@@ -16,13 +16,10 @@ export const startSignInWithEmailAndPassword = (email, password) => {
 
 // google authentication
 export const startSignInWithGoogleProvider = (pendingCredInfo) => {
-  console.log('1', pendingCredInfo);
   return (dispatch) => {
-    firebase.auth().signInWithPopup(googleAuthProvider).then((result) => {
+    firebase.auth().signInWithPopup(googleAuthProvider).then((userCred) => {
       if (pendingCredInfo) {
-        console.log('2', pendingCredInfo);
-        
-        result.user.linkAndRetrieveDataWithCredential(pendingCredInfo.pendingCred).then(() => {
+        userCred.user.linkAndRetrieveDataWithCredential(pendingCredInfo.pendingCred).then(() => {
           dispatch(removePendingCredInfo())
         });
       // dispatch(showAuthorizationModal(false))

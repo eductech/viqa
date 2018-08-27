@@ -19,7 +19,7 @@ class AuthorizationModal extends React.Component {
     mail: '',
     password: '',
     mailValidationErrMsg: 'please enter your email',
-    passwordValidationErrMsg: ''
+    passwordValidationErrMsg: 'please enter your password'
   }
 
   onMailChange = (e) => {
@@ -35,7 +35,14 @@ class AuthorizationModal extends React.Component {
 
   onPasswordChange = (e) => {
     const password = e.target.value;
-    this.setState({password});
+    if (!password) {
+      this.setState({passwordValidationErrMsg: 'please enter your password', password});
+    } else if (!password.match(/.{8,}/)) {
+      this.setState({passwordValidationErrMsg: 'password must be at least 8 characters long', 
+        password});
+    } else {
+      this.setState({passwordValidationErrMsg: '', password});
+    }
   }
 
   onSubmitHandler = (registration) => {
@@ -132,6 +139,12 @@ class AuthorizationModal extends React.Component {
                   autoFocus type="text" placeholder="enter mail"
                   onChange={this.onMailChange}
                 />
+                {
+                  this.state.mailValidationErrMsg &&
+                  <small className="form-text text-danger">
+                    {this.state.mailValidationErrMsg}
+                  </small>
+                }
               </div>
               <div className="form-group">
                 <input 
@@ -139,8 +152,16 @@ class AuthorizationModal extends React.Component {
                   type="text" placeholder="enter password"
                   onChange={this.onPasswordChange}
                 />
+                {
+                  this.state.mailValidationErrMsg &&
+                  <small className="form-text text-danger">
+                    {this.state.passwordValidationErrMsg}
+                  </small>
+                }
               </div>
-              <button type="submit" className="btn btn-primary ">
+              <button type="submit" className="btn btn-primary"
+                disabled={this.state.mailValidationErrMsg || this.state.passwordValidationErrMsg}
+              >
                 {this.state.registration ? 'Sign Up' : 'Sign In'}
               </button>
             </form>
