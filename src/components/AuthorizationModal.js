@@ -5,12 +5,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGoogle, faGithub } from "@fortawesome/free-brands-svg-icons";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 
+import { googleAuthProvider, githubAuthProvider } from '../firebase/firebase';
 import { showAuthorizationModal } from "../actions/sessionSettingsActions";
 import { 
   startCreateUserWithEmailAndPassword,
   startSignInWithEmailAndPassword,
-  startSignInWithGoogleProvider,
-  startSignInWithGitHubProvider
+  startSignInWithProvider
 } from '../actions/auth';
 
 class AuthorizationModal extends React.Component {
@@ -58,9 +58,9 @@ class AuthorizationModal extends React.Component {
     }
   }
 
-  onContinueHandler = () => {
+  onSignInWithProviderHandler = (provider) => {
     return () => {
-      this.props.startSignInWithGoogle(this.props.pendingCredInfo)
+      this.props.startSignInWithProvider(provider, this.props.pendingCredInfo)
     }
   }
 
@@ -115,7 +115,7 @@ class AuthorizationModal extends React.Component {
               <button 
                 className="btn btn-success"
                 onClick={
-                  this.onContinueHandler()
+                  this.onSignInWithProviderHandler(googleAuthProvider)
                 }
               >
                 <FontAwesomeIcon icon={faGoogle} className="mr-2"/>
@@ -123,7 +123,9 @@ class AuthorizationModal extends React.Component {
               </button>
               <button 
                 className="btn btn-warning"
-                onClick={this.props.startSignInWithGitHub}
+                onClick={
+                  this.onSignInWithProviderHandler(githubAuthProvider)
+                }
               >
                 <FontAwesomeIcon icon={faGithub} className="mr-2"/>
                 {this.state.registration ? 'Sign Up' : 'Sign In'} With GitHub
@@ -153,7 +155,7 @@ class AuthorizationModal extends React.Component {
                   onChange={this.onPasswordChange}
                 />
                 {
-                  this.state.mailValidationErrMsg &&
+                  this.state.passwordValidationErrMsg &&
                   <small className="form-text text-danger">
                     {this.state.passwordValidationErrMsg}
                   </small>
@@ -168,9 +170,10 @@ class AuthorizationModal extends React.Component {
           </div>
         ) : (
           <div>
-            <button onClick={
-              this.onContinueHandler()
-            }>
+            <button 
+              className="btn btn-primary"
+              onClick={this.onSignInWithProviderHandler(this.props.pendingCredInfo.provider)}
+            >
               Continue
             </button>
           </div>
@@ -192,8 +195,7 @@ const mapDispatchToProps = (dispatch, props) => {
     closeModal: () => dispatch(showAuthorizationModal(false)),
     createUser: (email, password) => dispatch(startCreateUserWithEmailAndPassword(email, password)),
     startSignIn: (email, password) => dispatch(startSignInWithEmailAndPassword(email, password)),
-    startSignInWithGoogle: (pendingCredInfo) => dispatch(startSignInWithGoogleProvider(pendingCredInfo)),
-    startSignInWithGitHub: () => dispatch(startSignInWithGitHubProvider())
+    startSignInWithProvider: (provider, pendingCredInfo) => dispatch(startSignInWithProvider(provider, pendingCredInfo))
   }
 }
 

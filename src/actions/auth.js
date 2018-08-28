@@ -1,49 +1,42 @@
 import { firebase, googleAuthProvider, githubAuthProvider } from "../firebase/firebase";
-import { showAuthorizationModal } from "../actions/sessionSettingsActions";
 
 // email and password authentication
 export const startCreateUserWithEmailAndPassword = (email, password) => {
   return () => {
-    return firebase.auth().createUserWithEmailAndPassword(email, password)
+    return firebase.auth().createUserWithEmailAndPassword(email, password).catch((err) => {
+      alert(err.message);
+    });
   }
 };
 
 export const startSignInWithEmailAndPassword = (email, password) => {
   return () => {
-    return firebase.auth().signInWithEmailAndPassword(email, password)
+    return firebase.auth().signInWithEmailAndPassword(email, password).catch((err) => {
+      alert(err.message);
+    });
   }
 };
 
-// google authentication
-export const startSignInWithGoogleProvider = (pendingCredInfo) => {
+// provider authentication
+export const startSignInWithProvider = (provider, pendingCredInfo) => {
   return (dispatch) => {
-    firebase.auth().signInWithPopup(googleAuthProvider).then((userCred) => {
+    firebase.auth().signInWithPopup(provider).then((userCred) => {
       if (pendingCredInfo) {
         userCred.user.linkAndRetrieveDataWithCredential(pendingCredInfo.pendingCred).then(() => {
           dispatch(removePendingCredInfo())
         });
-      // dispatch(showAuthorizationModal(false))
+      }
+    }).catch((err) => {
+      if (err.code === 'auth/account-exists-with-different-credential') {
+        handleAcountExistsWithDifferentCredentialError(err, dispatch)
+      } else {
+        alert(err.message);
       }
     });
   }
-} 
+}
 
-// github authentication
-export const startSignInWithGitHubProvider = () => {
-  return (dispatch) => {
-    firebase.auth().signInWithPopup(githubAuthProvider).catch((err) => {
-      if (err.code === 'auth/account-exists-with-different-credential') {
-        handleAcountExistsWithDifferentCredentialError(err, dispatch)
-      }
-    }).finally(
-      () => {
-        // dispatch(showAuthorizationModal(false))
-      }
-    )
-  }
-} 
-
-// sign out
+// SIGN_OUT
 export const signOut = () => ({
   type: 'SIGN_OUT'
 });
