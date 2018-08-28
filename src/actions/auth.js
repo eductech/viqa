@@ -9,9 +9,15 @@ export const startCreateUserWithEmailAndPassword = (email, password) => {
   }
 };
 
-export const startSignInWithEmailAndPassword = (email, password) => {
+export const startSignInWithEmailAndPassword = (email, password, pendingCredInfo) => {
   return () => {
-    return firebase.auth().signInWithEmailAndPassword(email, password).catch((err) => {
+    return firebase.auth().signInWithEmailAndPassword(email, password).then((userCred) => {
+      if (pendingCredInfo) {
+        userCred.user.linkAndRetrieveDataWithCredential(pendingCredInfo.pendingCred).then(() => {
+          dispatch(removePendingCredInfo())
+        });
+      }
+    }).catch((err) => {
       alert(err.message);
     });
   }
@@ -53,13 +59,7 @@ const handleAcountExistsWithDifferentCredentialError = (err, dispatch) => {
   var email = err.email;
   firebase.auth().fetchSignInMethodsForEmail(email).then((methods) => {
     if (methods[0] === 'password') {
-      var password = '14011993'; // TODO: implement promptUserForPassword.
-      firebase.auth().signInWithEmailAndPassword(email, password).then(() => {
-        // read about this function
-        return user.link(pendingCred);
-      }).then(() => {
-        // Google account successfully linked to the existing Firebase user.
-      });
+      dispatch(addPendingCredInfo({email, pendingCred}));
       return;
     }
     var provider = (methods.indexOf("google.com") > -1) ? googleAuthProvider : githubAuthProvider;
@@ -68,10 +68,11 @@ const handleAcountExistsWithDifferentCredentialError = (err, dispatch) => {
 };
 
 // ADD_PENDING_CRED_INFO
-export const addPendingCredInfo = ({provider, pendingCred}) => {
+export const addPendingCredInfo = ({email, provider, pendingCred}) => {
   return {
     type: 'ADD_PENDING_CRED_INFO',
     pendingCredInfo: {
+      email,
       provider,
       pendingCred
     }
