@@ -5,15 +5,17 @@ export const startCreateUserWithEmailAndPassword = (email, password) => {
   return () => {
     return firebase.auth().createUserWithEmailAndPassword(email, password).catch((err) => {
       alert(err.message);
+    }).catch((err) => {
+      alert(err.message);
     });
   }
 };
 
 export const startSignInWithEmailAndPassword = (email, password, pendingCredInfo) => {
-  return () => {
-    return firebase.auth().signInWithEmailAndPassword(email, password).then((userCred) => {
+  return (dispatch) => {
+    return firebase.auth().signInWithEmailAndPassword(email, password).then((user) => {
       if (pendingCredInfo) {
-        userCred.user.linkAndRetrieveDataWithCredential(pendingCredInfo.pendingCred).then(() => {
+        user.linkAndRetrieveDataWithCredential(pendingCredInfo.pendingCred).then(() => {
           dispatch(removePendingCredInfo())
         });
       }

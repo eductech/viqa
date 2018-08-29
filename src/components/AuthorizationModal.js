@@ -50,11 +50,25 @@ class AuthorizationModal extends React.Component {
       this.props.createUser : this.props.startSignIn;
     return (e) => {
       e.preventDefault();
-      submitHandler(
-        this.state.mail,
-        this.state.password
+      let pendingCredInfoEmail = undefined;
+      try {
+        pendingCredInfoEmail = this.props.pendingCredInfo.email;
+      } catch (error) {
+        
+      }
+      !pendingCredInfoEmail ? (
+        submitHandler(
+          this.state.mail,
+          this.state.password,
+        )
+      ) : (
+        submitHandler(
+          this.props.pendingCredInfo.email,
+          this.state.password,
+          this.props.pendingCredInfo
+        )
       );
-      this.props.closeModal();
+      // this.props.closeModal();
     }
   }
 
@@ -169,14 +183,40 @@ class AuthorizationModal extends React.Component {
             </form>
           </div>
         ) : (
-          <div>
-            <button 
-              className="btn btn-primary"
-              onClick={this.onSignInWithProviderHandler(this.props.pendingCredInfo.provider)}
-            >
-              Continue
-            </button>
-          </div>
+          !this.props.pendingCredInfo.email ? (
+            <div>
+              <button 
+                className="btn btn-primary"
+                onClick={this.onSignInWithProviderHandler(this.props.pendingCredInfo.provider)}
+              >
+                Continue
+              </button>
+            </div>
+          ) : (
+            <div>
+              <form onSubmit={this.onSubmitHandler(false)}>
+                <div className="form-group">
+                  <input 
+                    className="form-control"
+                    type="text" placeholder="enter password"
+                    onChange={this.onPasswordChange}
+                  />
+                  {
+                    this.state.passwordValidationErrMsg &&
+                    <small className="form-text text-danger">
+                      {this.state.passwordValidationErrMsg}
+                    </small>
+                  }
+                </div>
+                <button
+                  type="submit" 
+                  className="btn btn-primary"
+                >
+                  Continue
+                </button>
+              </form>
+            </div>
+          )
         )}
       </Modal>
     )
@@ -190,11 +230,11 @@ const mapStateToProps = (state) => {
   }
 };
 
-const mapDispatchToProps = (dispatch, props) => {
+const mapDispatchToProps = (dispatch) => {
   return {
     closeModal: () => dispatch(showAuthorizationModal(false)),
     createUser: (email, password) => dispatch(startCreateUserWithEmailAndPassword(email, password)),
-    startSignIn: (email, password) => dispatch(startSignInWithEmailAndPassword(email, password)),
+    startSignIn: (email, password, pendingCredInfo) => dispatch(startSignInWithEmailAndPassword(email, password, pendingCredInfo)),
     startSignInWithProvider: (provider, pendingCredInfo) => dispatch(startSignInWithProvider(provider, pendingCredInfo))
   }
 }
