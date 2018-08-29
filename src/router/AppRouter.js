@@ -12,9 +12,10 @@ class AppRouter extends React.Component {
     return (
       <BrowserRouter>
         <div>
-          <Header />
+          {/* <Header /> */}
           <Switch>
-            <Route exact path='/' component={HomePage} />
+            {/* <Route exact path='/' component={HomePage} /> */}
+            <Route exact path='/' component={LoginPage} />
             <Route path='/dashboard' component={DashboardPage}/>
             <Route component={Page404} />
           </Switch>

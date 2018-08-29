@@ -8,7 +8,7 @@ import AppRouter from './router/AppRouter';
 // redux
 import { Provider } from 'react-redux';
 import configureStore from './store/configureStore';
-import { startAddEquipment } from './actions/equipmentActions'
+import { signOut, signIn } from "./actions/auth";
 
 // styles
 import 'normalize.css/normalize.css';
@@ -20,12 +20,11 @@ import 'bootstrap/dist/js/bootstrap.bundle.min';
 // firebase
 import { firebase } from "./firebase/firebase";
 
+// components
+import LoadingPage from "./components/LoadingPage";
+
 const store = configureStore();
 
-/* TEST CODE */
-// store.dispatch(startAddEquipment({title: 'Press1', invNo: 5}));
-// store.dispatch(startAddEquipment({title: 'Press2', invNo: 5}));
-/* TEST CODE */
 const jsx = (
   <Provider store={store}>
     <AppRouter />
@@ -38,8 +37,16 @@ const renderApp = () => {
     hasRendered = true;
   }
 };
-ReactDOM.render(<p>Loading...</p>, document.getElementById('app'));
+
+ReactDOM.render(<LoadingPage />, document.getElementById('app'));
+
 firebase.auth().onAuthStateChanged((user) => {
-  renderApp();
+  if (user) {
+    store.dispatch(signIn(user.uid));
+    renderApp();
+  } else {
+    store.dispatch(signOut());
+    renderApp();
+  }
   console.log(user);
 });

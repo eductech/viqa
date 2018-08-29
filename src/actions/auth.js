@@ -1,6 +1,21 @@
 import { firebase, googleAuthProvider, githubAuthProvider } from "../firebase/firebase";
 
-// email and password authentication
+// SIGN IN
+// 1. email and password authentication
+//   1.1 email and password sign up
+//   1.2 email and password sign in
+// 2. provider authentication
+// 3. SIGN_IN
+// 4. handling account-exists-with-different-credential error
+// 5. ADD_PENDING_CRED_INFO
+// 6. REMOVE_PENDING_CRED_INFO
+//
+// SIGN OUT
+// 7. firebase sign out
+// 8. SIGN_OUT
+
+// 1.   email and password authentication
+// 1.1  email and password sign up
 export const startCreateUserWithEmailAndPassword = (email, password) => {
   return () => {
     return firebase.auth().createUserWithEmailAndPassword(email, password).catch((err) => {
@@ -11,6 +26,7 @@ export const startCreateUserWithEmailAndPassword = (email, password) => {
   }
 };
 
+// 1.2 email and password sign in
 export const startSignInWithEmailAndPassword = (email, password, pendingCredInfo) => {
   return (dispatch) => {
     return firebase.auth().signInWithEmailAndPassword(email, password).then((user) => {
@@ -25,7 +41,7 @@ export const startSignInWithEmailAndPassword = (email, password, pendingCredInfo
   }
 };
 
-// provider authentication
+// 2. provider authentication
 export const startSignInWithProvider = (provider, pendingCredInfo) => {
   return (dispatch) => {
     firebase.auth().signInWithPopup(provider).then((userCred) => {
@@ -44,18 +60,15 @@ export const startSignInWithProvider = (provider, pendingCredInfo) => {
   }
 }
 
-// SIGN_OUT
-export const signOut = () => ({
-  type: 'SIGN_OUT'
-});
+// 3. SIGN_IN
+export const signIn = (uid) => {
+  return {
+    type: 'SIGN_IN',
+    uid
+  }
+}
 
-export const startSignOut = () => {
-  return () => {
-    return firebase.auth().signOut();
-  };
-};
-
-// Handling account-exists-with-different-credential Errors
+// 4. handling account-exists-with-different-credential error
 const handleAcountExistsWithDifferentCredentialError = (err, dispatch) => {
   var pendingCred = err.credential;
   var email = err.email;
@@ -69,7 +82,7 @@ const handleAcountExistsWithDifferentCredentialError = (err, dispatch) => {
   });
 };
 
-// ADD_PENDING_CRED_INFO
+// 5. ADD_PENDING_CRED_INFO
 export const addPendingCredInfo = ({email, provider, pendingCred}) => {
   return {
     type: 'ADD_PENDING_CRED_INFO',
@@ -81,9 +94,21 @@ export const addPendingCredInfo = ({email, provider, pendingCred}) => {
   }
 }
 
-// REMOVE_PENDING_CRED_INFO
+// 6. REMOVE_PENDING_CRED_INFO
 export const removePendingCredInfo = () => {
   return {
     type: 'REMOVE_PENDING_CRED_INFO'
   }
 }
+
+// 7. firebase sign out
+export const startSignOut = () => {
+  return () => {
+    return firebase.auth().signOut();
+  };
+};
+
+// 8. SIGN_OUT
+export const signOut = () => ({
+  type: 'SIGN_OUT'
+});

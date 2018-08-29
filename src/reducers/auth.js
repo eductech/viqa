@@ -1,10 +1,21 @@
 const authReducer = (
   state={
+    uid: null,
     pendingCredInfo: null
   }, 
   action
 ) => {
-  switch (action.type) {
+    switch (action.type) {
+    case 'SIGN_IN':
+      return {
+        ...state,
+        uid: action.uid
+      };
+    case 'SIGN_OUT':
+      return {
+        ...state,
+        uid: null
+      };
     case 'ADD_PENDING_CRED_INFO':
       return {
         ...state,
