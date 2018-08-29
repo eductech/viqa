@@ -225,7 +225,6 @@ class AuthorizationModal extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    modalVisibility: state.sessionSettings.showAuthorizationModal,
     pendingCredInfo: state.auth.pendingCredInfo
   }
 };

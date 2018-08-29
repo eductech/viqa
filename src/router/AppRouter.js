@@ -1,26 +1,31 @@
 import React from 'react';
-import { BrowserRouter, Switch, Route } from "react-router-dom";
+import { Router, Switch, Route } from "react-router-dom";
+import createHistory from 'history/createBrowserHistory';
+
+// public and private routes
+import PrivateRoute from './PrivateRoute';
+import PublicRoute from './PublicRoute';
 
 // components
-import Header from "../components/Header";
 import HomePage from "../components/HomePage";
+import LoginPage from "../components/LoginPage";
 import DashboardPage from "../components/DashboardPage";
 import Page404 from "../components/Page404";
+
+const history = createHistory();
 
 class AppRouter extends React.Component {
   render() {
     return (
-      <BrowserRouter>
+      <Router history={history}>
         <div>
-          {/* <Header /> */}
           <Switch>
-            {/* <Route exact path='/' component={HomePage} /> */}
-            <Route exact path='/' component={LoginPage} />
-            <Route path='/dashboard' component={DashboardPage}/>
+            <PublicRoute exact path='/' component={LoginPage} />
+            <PrivateRoute path='/dashboard' component={DashboardPage}/>
             <Route component={Page404} />
           </Switch>
         </div>
-      </BrowserRouter>
+      </Router>
     );
   };
 } 
