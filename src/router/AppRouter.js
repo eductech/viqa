@@ -8,7 +8,8 @@ import PublicRoute from './PublicRoute';
 
 // components
 import LoginPage from "../components/LoginPage";
-import DashboardPage from "../components/DashboardPage";
+import EquipmentList from "../components/EquipmentList";
+import ScopeList from "../components/ScopeList";
 import Page404 from "../components/Page404";
 
 const history = createHistory();
@@ -20,7 +21,8 @@ class AppRouter extends React.Component {
         <div>
           <Switch>
             <PublicRoute exact path='/' component={LoginPage} />
-            <PrivateRoute path='/dashboard' component={DashboardPage}/>
+            <PrivateRoute path='/equipment' component={EquipmentList} />
+            <PrivateRoute path='/scope' component={ScopeList} />
             <Route component={Page404} />
           </Switch>
         </div>

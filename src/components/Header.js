@@ -10,19 +10,18 @@ const Header = (props) => {
       <h3 className="my-0 mr-md-auto font-weight-normal">VIQA</h3>
       <nav className="my-2 my-md-0 mr-md-3">
         <NavLink 
-          exact 
-          to="/" 
+          to='/equipment' 
           activeClassName="selected"
           className="p-2 text-dark"
         >
-          home
+          equipment
         </NavLink>
         <NavLink 
-          to={`/dashboard/${props.lastOpenedList}`} 
+          to='/scope' 
           activeClassName="selected"
           className="p-2 text-dark"
         >
-          dashboard
+          scope
         </NavLink>
       </nav>
       <button 
