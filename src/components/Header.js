@@ -2,6 +2,7 @@ import React from 'react';
 import { NavLink, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { showAuthorizationModal } from "../actions/sessionSettingsActions";
+import { startSignOut } from "../actions/auth";
 
 const Header = (props) => {
   return (
@@ -26,9 +27,9 @@ const Header = (props) => {
       </nav>
       <button 
         className="btn btn-outline-primary"
-        onClick={props.showAuthorizationModal}
+        onClick={props.startSignOut}
       >
-        Sign up / Sign in
+        Sign out
       </button>
     </header>
   );
@@ -42,7 +43,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    showAuthorizationModal: () => dispatch(showAuthorizationModal(true))
+    startSignOut: () => dispatch(startSignOut())
   }
 }
 

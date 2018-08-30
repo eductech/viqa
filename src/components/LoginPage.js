@@ -1,34 +1,47 @@
 import React from "react";
 import AuthorizationModal from './AuthorizationModal';
+import AuthorizationComponent from "./AuthorizationComponent";
 
 class LoginPage extends React.Component {
   state = {
     authModalVisible: false
   }
 
-  onAuthModalVisible = () => {
+  onAuthModalShow = () => {
     this.setState({authModalVisible: true});
-    console.log(this.state.authModalVisible);
-    
+  }
+
+  onAuthModalClose = () => {
+    this.setState({authModalVisible: false})
   }
 
   render() {
     return (
-      <div className="login-page">
-        <h1 className="color-primary">VIQA</h1>
-        <p>app for managment laboratory equipment</p>
-        <p>
-          simple tool, that allows you to create laboratory equipment database, which is invaluable for
-          managment proposals. Also it allows a librarian to create database of scope of accreditation
-          and link particulary sort of trials with nessesary equipment
-        </p>
-        <button 
-          onClick={this.onAuthModalVisible}
-          className="btn btn-outline-primary"
-        >
-          Sign up / Sign in
-        </button>
-        <AuthorizationModal modalVisibility={this.state.authModalVisible}/>
+      <div className="container">
+        <div className="row login-page">
+          <div className="col-md login-page__description">
+            <h1 className="color-primary">VIQA</h1>
+            <p>app for managment laboratory equipment</p>
+            <p>
+              simple tool, that allows you to create laboratory equipment database, which is invaluable for
+              managment proposals. Also it allows a librarian to create database of scope of accreditation
+              and link particulary sort of trials with nessesary equipment
+            </p>
+            <button 
+              onClick={this.onAuthModalShow}
+              className="btn btn-outline-primary btn-lg"
+            >
+              Sign up / Sign in
+            </button>
+          </div>
+          <div className="col-md login-page__auth">
+            <AuthorizationComponent />
+          </div>
+        </div>
+        <AuthorizationModal 
+          authModalVisible={this.state.authModalVisible}
+          onAuthModalClose={this.onAuthModalClose}
+        />
       </div>
     )
   }

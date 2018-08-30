@@ -7,7 +7,6 @@ import PrivateRoute from './PrivateRoute';
 import PublicRoute from './PublicRoute';
 
 // components
-import HomePage from "../components/HomePage";
 import LoginPage from "../components/LoginPage";
 import DashboardPage from "../components/DashboardPage";
 import Page404 from "../components/Page404";

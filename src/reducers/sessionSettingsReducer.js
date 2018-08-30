@@ -11,11 +11,6 @@ const sessionSettingsReducer = (
         ...state,
         lastOpenedList: action.lastOpenedList
       };
-    case 'SHOW_AUTHORIZATION_MODAL':
-      return {
-        ...state,
-        showAuthorizationModal: action.modalVisibility
-      }
     default:
       return state;
   }
