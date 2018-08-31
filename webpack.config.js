@@ -43,6 +43,18 @@ module.exports = (env) => {
             }
           ]
         })
+      }, {
+        test: /\.svg$/,
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              name: '[name].[ext]',
+              outputPath: '../images/',
+              useRelativePath: process.env.NODE_ENV === "production"
+            }
+          }
+        ]
       }]
     },
     plugins: [

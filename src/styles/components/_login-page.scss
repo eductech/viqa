@@ -1,16 +1,48 @@
+@import "../../node_modules/bootstrap/scss/utilities/spacing";
+
 .login-page {
+  background: center / cover no-repeat url("img/background.svg");
+}
+
+.login-page__content {
   height: 100vh;
 }
 
 .login-page__description {
-  display:flex;
-  justify-content:center;
+  display: flex;
+  justify-content: center;
   align-items: center;
   flex-flow: column;
+
+  p {
+    position: relative;
+    align-self: flex-end;
+
+    >span {
+      display: block;
+    }
+
+    .typed__background {
+      color: rgba($color: #ffffff, $alpha: 0.0);
+      user-select: none;
+    }
+
+    .typed {
+      position: absolute;
+      top: 0;
+    }
+  }
 
   @include media-breakpoint-up(md) {
     button {
       display: none;
+    }
+  }
+
+  @media (max-width: 370px) {
+    p {
+      margin-left: 5% !important;
+      margin-right: 5% !important;
     }
   }
 }
