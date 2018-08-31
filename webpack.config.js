@@ -51,7 +51,7 @@ module.exports = (env) => {
             options: {
               name: '[name].[ext]',
               outputPath: '../images/',
-              useRelativePath: process.env.NODE_ENV === "production"
+              useRelativePath: process.env.NODE_ENV === "development"
             }
           }
         ]

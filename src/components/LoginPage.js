@@ -14,7 +14,7 @@ class LoginPage extends React.Component {
     and link particulary sort of trials with nessesary equipment"];
     const options = {
     	strings: strings,
-      typeSpeed: 50
+      typeSpeed: 40
     };
     this.typed = new Typed(this.el, options);
   }
