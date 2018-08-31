@@ -135,7 +135,7 @@ class AuthorizationComponent extends React.Component {
               <div className="form-group">
                 <input 
                   className="form-control"
-                  autoFocus type="text" placeholder="enter mail"
+                  autoFocus type="text" placeholder="email"
                   onChange={this.onMailChange}
                 />
                 {
@@ -148,7 +148,7 @@ class AuthorizationComponent extends React.Component {
               <div className="form-group">
                 <input 
                   className="form-control"
-                  type="text" placeholder="enter password"
+                  type="text" placeholder="password"
                   onChange={this.onPasswordChange}
                 />
                 {
