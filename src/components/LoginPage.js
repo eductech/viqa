@@ -39,8 +39,8 @@ class LoginPage extends React.Component {
             <div className="col-md login-page__description">
               <div className="d-flex align-items-center p-md-3 mb-5 mb-md-4">
                 <img className="mr-3" src="/images/logo.svg" alt="logo" width="72" height="72"/>
-                <div className="lh-100">
-                  <h2 className="color-primary mb-0">VIQA</h2>
+                <div>
+                  <h2 className="mb-0">VIQA</h2>
                   <small className="text-muted">app for testing laboratories</small>
                 </div>
               </div>

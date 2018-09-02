@@ -1,0 +1,38 @@
+.header {
+  flex: 0 0 auto;
+}
+
+.header__logo {
+  @media (max-width: 870px) {
+    >img {
+      height: 48px;
+      width: 48px;
+    }
+    >div {
+      >small {
+        display: none;
+      }
+    }
+  }
+
+  @media (max-width: 790px) {
+    margin-left: 0 !important;
+    >img {
+      margin-right: 0 !important;
+    }
+    >div {
+      >h2 {
+        display: none;
+      }
+    }
+    >button {
+      margin-right: 0 !important;
+    }
+  }
+}
+
+.header__button {
+  @media (max-width: 790px) {
+    margin-right: 0 !important;
+  }
+}

@@ -14,8 +14,6 @@ import {startSetEquipmentList} from './actions/equipmentActions';
 // styles
 import 'normalize.css/normalize.css';
 import './styles/styles.scss';
-import $ from 'jquery';
-import Popper from 'popper.js';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
 
 // firebase

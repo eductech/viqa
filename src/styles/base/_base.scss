@@ -1,3 +1,16 @@
 .selected {
-    text-decoration: underline;
+  text-decoration: underline;
+  color: var(--primary) !important;
+}
+
+a.header-navlink:hover {
+  color: var(--primary) !important;
+}
+
+.private-page {
+  height: 100vh;
+}
+
+.private-page__content {
+  flex: 1 1 auto;
 }

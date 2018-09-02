@@ -4,7 +4,7 @@ import EquipmentListFilters from "./EquipmentListFilters";
 
 const EquipmentListPage = () => {
   return (
-    <div>
+    <div className="d-flex flex-column shadow-sm private-page__content">
       <EquipmentList />
       <EquipmentListFilters />
     </div>

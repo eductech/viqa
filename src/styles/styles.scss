@@ -1,8 +1,12 @@
 @import './base/settings';
-@import './base/base';
 @import "../../node_modules/bootstrap/scss/bootstrap";
+@import './base/base';
 
 @import './components/modal';
 @import './components/loader';
 @import './components/login-page';
 @import './components/authorization';
+@import './components/scope';
+@import './components/header';
+@import './components/equipment';
+@import './components/scrollbar';

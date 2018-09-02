@@ -8,7 +8,7 @@ import PublicRoute from './PublicRoute';
 
 // components
 import LoginPage from "../components/LoginPage";
-import EquipmentListPage from "../components/EquipmentList";
+import EquipmentListPage from "../components/EquipmentListPage";
 import ScopeList from "../components/ScopeList";
 import Page404 from "../components/Page404";
 
@@ -23,6 +23,8 @@ class AppRouter extends React.Component {
             <PublicRoute exact path='/' component={LoginPage} />
             <PrivateRoute path='/equipment' component={EquipmentListPage} />
             <PrivateRoute path='/scope' component={ScopeList} />
+            <PrivateRoute path='/protocols' component={ScopeList} />
+            <PrivateRoute path='/tasks' component={ScopeList} />
             <Route component={Page404} />
           </Switch>
         </div>

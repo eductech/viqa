@@ -2,9 +2,11 @@ import React from "react";
 
 class EquipmentListFilters extends React.Component {
   render() {
-    <div>
-      this is filters area
-    </div>
+    return (
+      <div className="bg-white border-top equipment-filters">
+        <p>this is filters area</p>
+      </div>
+    )
   }
 }
 

@@ -10,8 +10,8 @@ export const PrivateRoute = ({
 }) => (
     <Route {...rest} component={(props) => (
       isAuthenticated ? (
-        <div>
-          <Header />
+        <div className="d-flex flex-column private-page">
+          <Header/>
           <Component {...props} />
         </div>
       ) : (
