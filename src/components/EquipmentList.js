@@ -1,27 +1,24 @@
 import React from "react";
 import { connect } from 'react-redux';
-import { changeLastOpenedList } from "../actions/sessionSettingsActions";
+import EquipmentListItem from './EquipmentListItem';
 
-class EquipmentList extends React.Component {
-  componentDidMount() {
-    this.props.changeLastOpenedList();
-  }
-
-  render() {
-    return (
-      <div>
-        <p>this is EquipmentList</p>
-        <ul>
-          {this.props.equipment.map((i) =>{
-            return (
-              <li>{i.title}</li>
-            );
-          })}
-        </ul>
-      </div>
-    );
-  }
-}
+const EquipmentList = (props) => (
+  <div>
+    <div>
+      {
+        props.equipment.length === 0 ? (
+          <div>
+            <span>your equipment data is empty</span>
+          </div>
+        ) : (
+          props.equipment.map((equipment) => {
+            return <EquipmentListItem key={equipment.id} {...equipment} />;
+          })
+        )
+      }
+    </div>
+  </div>
+);
 
 const mapStateToProps = (state) => {
   return {
@@ -29,10 +26,4 @@ const mapStateToProps = (state) => {
   }
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    changeLastOpenedList: () => dispatch(changeLastOpenedList('equipment'))
-  }
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(EquipmentList);
+export default connect(mapStateToProps)(EquipmentList);

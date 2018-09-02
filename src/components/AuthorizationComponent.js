@@ -82,7 +82,7 @@ class AuthorizationComponent extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="authorization">
         {!this.props.pendingCredInfo ? (
           <div>
             <div className="d-flex justify-content-around">

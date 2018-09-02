@@ -9,6 +9,7 @@ import AppRouter from './router/AppRouter';
 import { Provider } from 'react-redux';
 import configureStore from './store/configureStore';
 import { signOut, signIn } from "./actions/auth";
+import {startSetEquipmentList} from './actions/equipmentActions';
 
 // styles
 import 'normalize.css/normalize.css';
@@ -43,7 +44,9 @@ ReactDOM.render(<LoadingPage />, document.getElementById('app'));
 firebase.auth().onAuthStateChanged((user) => {
   if (user) {
     store.dispatch(signIn(user.uid));
-    renderApp();
+    store.dispatch(startSetEquipmentList()).then(() => {
+      renderApp();
+    });
   } else {
     store.dispatch(signOut());
     renderApp();

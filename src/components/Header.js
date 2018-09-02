@@ -1,7 +1,6 @@
 import React from 'react';
 import { NavLink, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
-import { showAuthorizationModal } from "../actions/sessionSettingsActions";
 import { startSignOut } from "../actions/auth";
 
 const Header = (props) => {
@@ -34,16 +33,10 @@ const Header = (props) => {
   );
 }
 
-const mapStateToProps = (state) => {
-  return {
-    lastOpenedList: state.sessionSettings.lastOpenedList
-  }
-}
-
 const mapDispatchToProps = (dispatch) => {
   return {
     startSignOut: () => dispatch(startSignOut())
   }
 }
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Header));
+export default withRouter(connect(undefined, mapDispatchToProps)(Header));
