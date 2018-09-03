@@ -7,26 +7,20 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSignOutAlt, faFileAlt, faVial, faFolderOpen, faTasks } from "@fortawesome/free-solid-svg-icons";
 
 class Header extends React.Component {
-  state = {
-    width: 124
-  }
-
   componentWillMount() {
-    this.updateDimensions();
+    this.setMobileIcons();
   }
 
   componentDidMount() {
-    window.addEventListener("resize", this.updateDimensions.bind(this));
+    window.addEventListener("resize", this.setMobileIcons.bind(this));
   }  
 
   componentWillUnmount() {
-    window.removeEventListener("resize", this.updateDimensions.bind(this));
+    window.removeEventListener("resize", this.setMobileIcons.bind(this));
   }
 
-  updateDimensions() {
-    console.log($(window).width());
-    console.log(this);
-    this.setState({width: $(window).width()});
+  setMobileIcons() {
+    ($(window).width() <= 570) ? this.setState({mobileIcons: true}) : this.setState({mobileIcons: false});
   }
 
   render() {
@@ -39,14 +33,14 @@ class Header extends React.Component {
             <small className="text-muted">app for testing laboratories</small>
           </div>
         </div>
-        <nav className="m-auto">
+        <nav className="m-auto header__nav">
           <NavLink 
             to='/equipment' 
             activeClassName="selected"
             className="mx-3 text-dark header-navlink"
             title="equipment"
           >
-            <FontAwesomeIcon icon={faVial} /> equipment
+            <FontAwesomeIcon icon={faVial} />{this.state.mobileIcons ? "" : " equipment"}
           </NavLink>
           <NavLink 
             to='/scope' 
@@ -54,7 +48,7 @@ class Header extends React.Component {
             className="mx-3 text-dark header-navlink"
             title="scope"
           >
-            <FontAwesomeIcon icon={faFileAlt} /> scope
+            <FontAwesomeIcon icon={faFileAlt} />{this.state.mobileIcons ? "" : " scope"}
           </NavLink>
           <NavLink 
             to='/protocols' 
@@ -62,7 +56,7 @@ class Header extends React.Component {
             className="mx-3 text-dark header-navlink"
             title="protocols"
           >
-            <FontAwesomeIcon icon={faFolderOpen} /> protocols
+            <FontAwesomeIcon icon={faFolderOpen} />{this.state.mobileIcons ? "" : " protocols"}
           </NavLink>
           <NavLink 
             to='/tasks' 
@@ -70,7 +64,7 @@ class Header extends React.Component {
             className="mx-3 text-dark header-navlink"
             title="tasks"
           >
-            <FontAwesomeIcon icon={faTasks} /> tasks
+            <FontAwesomeIcon icon={faTasks} />{this.state.mobileIcons ? "" : " tasks"}
           </NavLink>
         </nav>
         <button 
