@@ -9,15 +9,17 @@ export const setEquipmentList = (equipmentList) => {
 }
 
 export const startSetEquipmentList = () => {
-  return (dispatch) => {
-    return database.ref('equipment').once('value').then((snapshot) => {
+  return (dispatch, getState) => {
+    const uid = getState().auth.uid;
+    return database.ref(`users/${uid}/equipment`).once('value').then((snapshot) => {
       const equipmentList = [];
-      console.log(snapshot);
       
       snapshot.forEach((childSnapshot) => {
-        equipmentList.push({...childSnapshot.val()});
+        equipmentList.push({
+          id: childSnapshot.key,
+          ...childSnapshot.val()
+        });
       });
-      console.log(equipmentList);
       
       dispatch(setEquipmentList(equipmentList));
     });
@@ -32,25 +34,57 @@ const addEquipment = (equipment) => {
   };
 }
 
-export const startAddEquipment = ({
-  title = '',
-  invNo = Math.random() * 10000
-} = {}) => {
-  return (dispatch) => {
-    const equipment = {title, invNo};
+export const startAddEquipment = (equipmentData = {}) => {
+  return (dispatch, getState) => {
+    const uid = getState().auth.uid;
+    const {
+      title = '',
+      invNo = Math.random() * 10000,
+      factNo = Math.random() * 10000,
+      producer = '',
+      description = '',
+      verificationExpires = 0
+    } = equipmentData;
+    const equipment = {title, invNo, factNo, producer, description, verificationExpires};
     
-    database.ref('equipment').push(equipment).then(
+    database.ref(`users/${uid}/equipment`).push(equipment).then(
       (ref) => {
         dispatch(addEquipment({
-          invNo: equipment.invNo,
-          title: equipment.title
+          id: ref.key,
+          ...equipment
         }));
       }
     );
   }
 };
 
-
 // REMOVE_EQUIPMENT
+export const removeEquipment = ({ id } = {}) => ({
+  type: 'REMOVE_EQUIPMENT',
+  id
+});
+
+export const startRemoveEquipment = ({ id } = {}) => {
+  return (dispatch, getState) => {
+    const uid = getState().auth.uid;
+    return database.ref(`users/${uid}/equipment/${id}`).remove().then(() => {
+      dispatch(removeEquipment({ id }));
+    });
+  };
+};
 
 // UPDATE_EQUIPMENT
+export const editEquipment = (id, updates) => ({
+  type: 'EDIT_EQUIPMENT',
+  id,
+  updates
+});
+
+export const startEditEquipment = (id, updates) => {
+  return (dispatch, getState) => {
+    const uid = getState().auth.uid;
+    return database.ref(`users/${uid}/equipment/${id}`).update(updates).then(() => {
+      dispatch(editEquipment(id, updates));
+    });
+  };
+};
