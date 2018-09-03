@@ -1,11 +1,20 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import moment from 'moment';
 
-const EquipmentListItem = ({title, invNo}) => {
+const EquipmentListItem = ({
+  title, 
+  invNo, 
+  factNo, 
+  producer, 
+  verificationExpires
+}) => {
   return (
-    <div>
-      <p>{title}</p>
-      <p>{invNo}</p>
+    <div className="px-3 py-2 border-bottom equipment-list-item">
+      <div>{invNo}</div>
+      <div>{title}</div>
+      <div>{factNo}</div>
+      <div>{producer}</div>
+      <div>{moment(verificationExpires).format('DD.MM.YYYY')}</div>
     </div>
   )
 }

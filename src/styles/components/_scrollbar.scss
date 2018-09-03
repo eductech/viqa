@@ -1,19 +1,19 @@
 .custom-scrollbar::-webkit-scrollbar {
-	width: 16px;
+	width: 6px;
 	background-color: #F5F5F5;
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb {
-	border-radius: 4px;
-	background-color: var(--secondary);
+	border-radius: 3px;
+	background-color: #0051a6;
 }
 
 @media (max-width: 620px) {
   .custom-scrollbar::-webkit-scrollbar {
-    width: 12px;
+    width: 4px;
   }
   
   .custom-scrollbar::-webkit-scrollbar-thumb {
-    border-radius: 3px;
+    border-radius: 2px;
   }
 }
