@@ -1,5 +1,5 @@
 import React from "react";
-import AuthorizationModal from './AuthorizationModal';
+import Modal from './Modal';
 import AuthorizationComponent from "./AuthorizationComponent";
 import Typed from 'typed.js';
 
@@ -65,9 +65,10 @@ class LoginPage extends React.Component {
               <AuthorizationComponent />
             </div>
           </div>
-          <AuthorizationModal 
+          <Modal 
             authModalVisible={this.state.authModalVisible}
             onAuthModalClose={this.onAuthModalClose}
+            contentComponent={AuthorizationComponent}
           />
         </div>
       </div>

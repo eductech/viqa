@@ -12,14 +12,14 @@ class Header extends React.Component {
   }
 
   componentDidMount() {
-    window.addEventListener("resize", this.setMobileIcons.bind(this));
+    window.addEventListener("resize", this.setMobileIcons);
   }  
 
   componentWillUnmount() {
-    window.removeEventListener("resize", this.setMobileIcons.bind(this));
+    window.removeEventListener("resize", this.setMobileIcons);
   }
 
-  setMobileIcons() {
+  setMobileIcons = () => {
     ($(window).width() <= 570) ? this.setState({mobileIcons: true}) : this.setState({mobileIcons: false});
   }
 

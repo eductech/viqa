@@ -1,13 +1,13 @@
 import React from 'react';
-import Modal from 'react-modal';
+import ReactModal from 'react-modal';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 
-import AuthorizationComponent from "./AuthorizationComponent";
+const Modal = (props) => {
+  const ContentComponent = props.contentComponent;
 
-const AuthorizationModal = (props) => {
   return ( 
-    <Modal
+    <ReactModal
       isOpen={props.authModalVisible}
       contentLabel="Authorization Modal"
       onRequestClose={props.onAuthModalClose}
@@ -21,9 +21,9 @@ const AuthorizationModal = (props) => {
       >
         <FontAwesomeIcon icon={faTimes} className=""/>
       </button>
-      <AuthorizationComponent />
-    </Modal>
+      <ContentComponent {...props.contentComponentProps}/>
+    </ReactModal>
   )
 };
 
-export default AuthorizationModal;
+export default Modal;

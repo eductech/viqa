@@ -24,15 +24,7 @@ class EquipmentListFilters extends React.Component {
   render() {
     return (
       <div className="bg-white border-top equipment-filters">
-        <div>
-          <input
-            type="text"
-            placeholder="Search equipment..."
-            value={this.props.filters.text}
-            onChange={this.onTextChange}
-          />
-        </div>
-        <div>
+        <div className="equipment-filters__date-picker">
           <DateRangePicker
             startDate={this.props.filters.startDate}
             endDate={this.props.filters.endDate}
@@ -42,6 +34,14 @@ class EquipmentListFilters extends React.Component {
             showClearDates={true}
             numberOfMonths={1}
             isOutsideRange={() => false}
+          />
+        </div>
+        <div className="equipment-filters__search">
+          <input
+            type="text"
+            placeholder="Search equipment..."
+            value={this.props.filters.text}
+            onChange={this.onTextChange}
           />
         </div>
       </div>

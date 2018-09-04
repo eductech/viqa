@@ -44,14 +44,6 @@ ReactDOM.render(<LoadingPage />, document.getElementById('app'));
 firebase.auth().onAuthStateChanged((user) => {
   if (user) {
     store.dispatch(signIn(user.uid));
-    store.dispatch(startAddEquipment({
-      title: 'press',
-      invNo: 1515,
-      factNo: 845458,
-      producer: 'Novosib Inc.',
-      description: 'for testing material strength',
-      verificationExpires: 1498484
-    }));
     store.dispatch(startSetEquipmentList()).then(() => {
       renderApp();
     });
@@ -59,5 +51,4 @@ firebase.auth().onAuthStateChanged((user) => {
     store.dispatch(signOut());
     renderApp();
   }
-  console.log(user);
 });

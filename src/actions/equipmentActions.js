@@ -73,7 +73,7 @@ export const startRemoveEquipment = ({ id } = {}) => {
   };
 };
 
-// UPDATE_EQUIPMENT
+// EDIT_EQUIPMENT
 export const editEquipment = (id, updates) => ({
   type: 'EDIT_EQUIPMENT',
   id,

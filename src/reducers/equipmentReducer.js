@@ -7,7 +7,7 @@ const equipmentReducer = (state = [], action) => {
       ];
     case 'REMOVE_EQUIPMENT':
       return state.filter(({ id }) => id !== action.id);
-    case 'UPDATE_EQUIPMENT':
+    case 'EDIT_EQUIPMENT':
       return state.map((equipment) => {
         if (equipment.id === action.id) {
           return {
