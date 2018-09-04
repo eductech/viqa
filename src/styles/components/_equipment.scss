@@ -12,9 +12,19 @@
   width: 100%;
 
   >div {
-    flex: 1 1 auto;
+    flex: 1 1 20%;
     text-align: center;
     font-weight: bolder;
+    padding: 0 1rem;
+    cursor: pointer;
+
+    &:hover {
+      color: var(--primary);
+    }
+  }
+
+  >.sorted-by {
+    color: var(--primary);
   }
 
   @media (max-width: 576px) {
@@ -56,9 +66,30 @@
 .equipment-list-item {
   display: flex;
   flex-direction: row;
+  cursor: pointer;
+
+  >div:nth-child(1) {
+    text-align: center;
+  }
+
+  >div:nth-child(3) {
+    text-align: center;
+  }
+  
+  >div:nth-child(5) {
+    text-align: center;
+  }
 
   >div {
-    flex: 1 1 auto;
+    flex: 1 1 20%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    padding: 0 1rem;
+  }
+
+  &:hover {
+    background-color: #F5F5F5;
   }
 }
 

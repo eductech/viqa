@@ -1,6 +1,4 @@
-const equipmentReducer = (
-state = [],
-action) => {
+const equipmentReducer = (state = [], action) => {
   switch (action.type) {
     case 'ADD_EQUIPMENT':
       return [

@@ -9,7 +9,7 @@ const EquipmentListItem = ({
   verificationExpires
 }) => {
   return (
-    <div className="px-3 py-2 border-bottom equipment-list-item">
+    <div className="py-2 border-bottom equipment-list-item">
       <div>{invNo}</div>
       <div>{title}</div>
       <div>{factNo}</div>
