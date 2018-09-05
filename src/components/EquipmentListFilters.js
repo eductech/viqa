@@ -35,12 +35,15 @@ class EquipmentListFilters extends React.Component {
             showClearDates={true}
             numberOfMonths={1}
             isOutsideRange={() => false}
+            displayFormat="DD.MM.YYYY"
+            hideKeyboardShortcutsPanel
           />
         </div>
         <div className="equipment-filters__search">
           <p>Equipment search:</p>
           <input
             type="text"
+            autoFocus
             placeholder="search by title"
             value={this.props.filters.text}
             onChange={this.onTextChange}

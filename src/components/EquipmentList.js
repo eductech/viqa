@@ -64,28 +64,42 @@ class EquipmentList extends React.Component {
     return (
       <div className="equipment-list">
         <div className="py-3 border-bottom equipment-list__header">
-          <div onClick={this.props.sortByInvNo} className="sorted-by">Inventory Number</div>
-          <div onClick={this.props.sortByTitle}>Title</div>
-          <div onClick={this.props.sortByFactNo}>Factory Number</div>
-          <div onClick={this.props.sortByProducer}>Producer</div>
-          <div onClick={this.props.sortByVerificationExpires}>Verification Expires</div>
+          <div className="sorted-by">
+            <span onClick={this.props.sortByInvNo} >Inventory Number</span>
+          </div>
+          <div>
+            <span onClick={this.props.sortByTitle}>Title</span>
+          </div>
+          <div>
+            <span onClick={this.props.sortByFactNo}>Factory Number</span>
+          </div>
+          <div>
+            <span onClick={this.props.sortByProducer}>Producer</span>
+          </div>
+          <div>
+            <span onClick={this.props.sortByVerificationExpires}>Verification Expires</span>
+          </div>
         </div>
         <div className="equipment-list__body custom-scrollbar">
           {
             this.props.equipment.length === 0 ? (
-              <div className="mx-3">
+              <div className="mx-3 empty">
                 <span>your equipment data is empty</span>
               </div>
             ) : (
-              this.props.equipment.map((equipment) => {
-                return (
-                  <EquipmentListItem 
-                    key={equipment.id} 
-                    {...equipment} 
-                    onItemClick={this.onEquipmentListItemClick}
-                  />
-                );
-              })
+              <div className="data">
+                {
+                  this.props.equipment.map((equipment) => {
+                    return (
+                      <EquipmentListItem 
+                        key={equipment.id} 
+                        {...equipment} 
+                        onItemClick={this.onEquipmentListItemClick}
+                      />
+                    );
+                  })
+                }
+              </div>
             )
           }
         </div>

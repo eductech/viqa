@@ -3,8 +3,8 @@ import moment from 'moment';
 const equipmentFiltersReducerDefaultState = {
   text: '',
   sortBy: 'invNo',
-  startDate: moment().startOf('month'),
-  endDate: moment().endOf('month')
+  startDate: null,
+  endDate: null
 };
 
 export default (state = equipmentFiltersReducerDefaultState, action) => {

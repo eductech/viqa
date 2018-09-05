@@ -6,26 +6,52 @@
 }
 
 .equipment-list__header {
+  padding-left: 2rem;
   display: flex;
   flex-direction: row;
   flex: 0 0 auto;
   width: 100%;
+  align-items: center;
+  
+  >div:nth-child(1) {
+    flex: 1 1 10%;
+  }
+  >div:nth-child(2) {
+    flex: 1 1 30%;
+  }
+  >div:nth-child(3) {
+    flex: 1 1 10%;
+  }
+  >div:nth-child(4) {
+    flex: 1 1 30%;
+  }
+  >div:nth-child(5) {
+    flex: 1 1 20%;
+  }
 
   >div {
-    flex: 1 1 20%;
     text-align: center;
-    font-weight: bolder;
-    padding: 0 1rem;
+    padding: 0 0.3rem;
     cursor: pointer;
+    font-weight: 700;
+    font-size: 0.85rem;
+  }
 
-    &:hover {
-      color: var(--primary);
+  >.sorted-by span {
+    position: relative;
+
+    &::after {
+      content: "";
+      display: inline-block;
+      position: absolute;
+      bottom: auto;
+      border: 4px solid transparent;
+      border-top-color: var(--dark);
+      left: -14px;
+      top: 9px;
     }
   }
-
-  >.sorted-by {
-    color: var(--primary);
-  }
+  
 
   @media (max-width: 576px) {
     display: none;
@@ -35,6 +61,20 @@
 .equipment-list__body {
   overflow: overlay;
   flex: 1 1 auto;
+  display: flex;
+
+  >.empty {
+    width: 100%;
+    text-align: center;
+    align-self: center;
+    background: center / contain no-repeat url("/images/empty.svg");
+    height: 400px;
+    line-height: 400px;
+  }
+
+  >.data {
+    width: 100%;
+  }
 }
 
 .equipment-list__add-btn {
@@ -51,11 +91,8 @@
   color: var(--white);
 
   @media (max-width: 330px) {
-    height: 36px;
-    width: 36px;
-    border-radius: 18px;
-    margin-right: 18px;
-    margin-bottom: 18px;
+    margin-right: 16px;
+    margin-bottom: 16px;
   }
 
   &:hover {
@@ -64,7 +101,12 @@
 }
 
 .equipment-list-item {
+  padding-left: 2rem;
   position: relative;
+  
+  &:hover {
+    background-color: #F5F5F5;
+  }
 
   .equipment-list-item__row {
     display: flex;
@@ -72,34 +114,74 @@
     cursor: pointer;
     
     >div:nth-child(1) {
+      flex: 1 1 10%;
       text-align: center;
     }
-
+    >div:nth-child(2) {
+      flex: 1 1 30%;
+      text-align: center;
+    }
     >div:nth-child(3) {
+      flex: 1 1 10%;
       text-align: center;
     }
-    
+    >div:nth-child(4) {
+      flex: 1 1 30%;
+      text-align: center;
+    }
     >div:nth-child(5) {
+      flex: 1 1 20%;
       text-align: center;
     }
 
     >div {
-      flex: 1 1 20%;
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
-      padding: 0 1rem;
+      padding: 0 0.3rem;
     }
 
-    &:hover {
-      background-color: #F5F5F5;
+    @media (max-width: 576px) {
+      display: block;
+      >div:nth-child(1) {
+        font-weight: 700;
+        font-size: 0.8rem;
+        &::before {
+          content: "Inv. №: ";
+        }
+      }
+      >div:nth-child(2) {
+        font-style: italic;
+      }
+      >div:nth-child(3) {
+        display: none;
+      }
+      >div:nth-child(4) {
+        display: none;
+      }
+      >div:nth-child(5) {
+        &::before {
+          content: "Verification expires: ";
+        }
+      }
     }
   }
 }
 
 .equipment-list-item__btn-remove {
   position: absolute;
-  z-index: 2;
+  background: none;
+  border: none;
+  color: var(--danger);
+  cursor: pointer;
+  left: 12px;
+
+  @media (min-width: 871px) {
+    left: 24px;
+  }
+  @media (min-width: 721px) {
+    left: 16px;
+  }
 }
 
 .equipment-filters {
@@ -129,7 +211,7 @@
 
   @media (max-width: 720px) {
     flex-direction: column;
-    padding-left: 5%;
+    align-items: center;
 
     >* {
       margin-top: 0.5rem;
@@ -145,4 +227,24 @@
       border-radius: 0.25rem;
     }
   }
+
+  @media (min-width: 516px) and (max-width: 720px) {
+    >* {
+      width: 60%;
+    }
+
+    .equipment-filters__search {
+      >input {
+        width: 100%;
+      }
+    }
+  }
+}
+
+.equipment-form {
+  max-height: 458px;
+  max-width: 310px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  padding: 8px;
 }

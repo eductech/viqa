@@ -11,15 +11,15 @@ export default (equipmentArr, { text, sortBy, startDate, endDate }) => {
   }).sort((a, b) => {
     switch (sortBy) {
       case 'invNo':
-        return a.invNo < b.invNo ? 1 : -1;
+        return a.invNo < b.invNo ? -1 : 1;
       case 'title':
-        return a.title < b.title ? 1 : -1;
+        return a.title < b.title ? -1 : 1;
       case 'factNo':
-        return a.factNo < b.factNo ? 1 : -1;
+        return a.factNo < b.factNo ? -1 : 1;
       case 'producer':
-        return a.producer < b.producer ? 1 : -1;
+        return a.producer < b.producer ? -1 : 1;
       case 'verificationExpires':
-        return a.verificationExpires < b.verificationExpires ? 1 : -1;
+        return a.verificationExpires < b.verificationExpires ? -1 : 1;
     }
   });
 };

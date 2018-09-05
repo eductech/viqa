@@ -16,8 +16,12 @@
   }
 }
 
+.SingleDatePickerInput {
+  border-radius: 0.25rem;
+  text-align: center;
+}
 
-.DateRangePicker__picker {
+.DateRangePicker__picker, .SingleDatePicker__picker {
   top: unset;
   bottom: 59px;
 }

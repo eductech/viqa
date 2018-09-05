@@ -2,6 +2,9 @@ import React from "react";
 import Modal from './Modal';
 import AuthorizationComponent from "./AuthorizationComponent";
 import Typed from 'typed.js';
+import { connect } from "react-redux";
+
+import { removePendingCredInfo } from "../actions/auth";
 
 class LoginPage extends React.Component {
   state = {
@@ -28,7 +31,8 @@ class LoginPage extends React.Component {
   }
 
   onAuthModalClose = () => {
-    this.setState({authModalVisible: false})
+    this.setState({authModalVisible: false});
+    this.props.removePendingCredInfo();
   }
 
   render() {
@@ -77,4 +81,10 @@ class LoginPage extends React.Component {
   }
 }
 
-export default LoginPage;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    removePendingCredInfo: () => dispatch(removePendingCredInfo())
+  }
+}
+
+export default connect(undefined, mapDispatchToProps)(LoginPage);

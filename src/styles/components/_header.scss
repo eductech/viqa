@@ -39,10 +39,11 @@
   justify-content: space-around;
   margin: 0 10%;
 
-  >* {
+  >a {
     font-weight: 500;
     &:hover {
       text-decoration: none;
+      color: var(--primary) !important;
     }
 
     >svg {
