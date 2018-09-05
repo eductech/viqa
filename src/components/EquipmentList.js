@@ -7,6 +7,7 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import Modal from "./Modal";
 import EquipmentForm from "./EquipmentForm";
 import EquipmentListItem from './EquipmentListItem';
+import selecteEquipment from "../selectors/equipmentSelector";
 import { 
   sortByFactNo, 
   sortByInvNo, 
@@ -47,7 +48,6 @@ class EquipmentList extends React.Component {
   }
 
   onSubmit = (equipment) => {
-    console.log(this.state.selectedEquipmentId);
     if (this.state.selectedEquipmentId) {
       this.props.startEditEquipment(this.state.selectedEquipmentId, equipment)
     } else {
@@ -109,7 +109,7 @@ class EquipmentList extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    equipment: state.equipment
+    equipment: selecteEquipment(state.equipment, state.equipmentFilters)
   }
 };
 
