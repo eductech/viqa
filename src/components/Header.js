@@ -33,38 +33,38 @@ class Header extends React.Component {
             <small className="text-muted">app for testing laboratories</small>
           </div>
         </div>
-        <nav className="m-auto header__nav">
+        <nav className="header__nav">
           <NavLink 
             to='/equipment' 
             activeClassName="selected"
-            className="mx-3 text-dark header-navlink"
+            className="text-dark"
             title="equipment"
           >
-            <FontAwesomeIcon icon={faVial} />{this.state.mobileIcons ? "" : " equipment"}
+            <FontAwesomeIcon icon={faVial} />{this.state.mobileIcons ? "" : "equipment"}
           </NavLink>
           <NavLink 
             to='/scope' 
             activeClassName="selected"
-            className="mx-3 text-dark header-navlink"
+            className="text-dark"
             title="scope"
           >
-            <FontAwesomeIcon icon={faFileAlt} />{this.state.mobileIcons ? "" : " scope"}
+            <FontAwesomeIcon icon={faFileAlt} />{this.state.mobileIcons ? "" : "scope"}
           </NavLink>
           <NavLink 
             to='/protocols' 
             activeClassName="selected"
-            className="mx-3 text-dark header-navlink"
+            className="text-dark"
             title="protocols"
           >
-            <FontAwesomeIcon icon={faFolderOpen} />{this.state.mobileIcons ? "" : " protocols"}
+            <FontAwesomeIcon icon={faFolderOpen} />{this.state.mobileIcons ? "" : "protocols"}
           </NavLink>
           <NavLink 
             to='/tasks' 
             activeClassName="selected"
-            className="mx-3 text-dark header-navlink"
+            className="text-dark"
             title="tasks"
           >
-            <FontAwesomeIcon icon={faTasks} />{this.state.mobileIcons ? "" : " tasks"}
+            <FontAwesomeIcon icon={faTasks} />{this.state.mobileIcons ? "" : "tasks"}
           </NavLink>
         </nav>
         <button 

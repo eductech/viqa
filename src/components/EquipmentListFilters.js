@@ -25,6 +25,7 @@ class EquipmentListFilters extends React.Component {
     return (
       <div className="bg-white border-top equipment-filters">
         <div className="equipment-filters__date-picker">
+          <p>Time period, verification will expire in:</p>
           <DateRangePicker
             startDate={this.props.filters.startDate}
             endDate={this.props.filters.endDate}
@@ -37,9 +38,10 @@ class EquipmentListFilters extends React.Component {
           />
         </div>
         <div className="equipment-filters__search">
+          <p>Equipment search:</p>
           <input
             type="text"
-            placeholder="Search equipment..."
+            placeholder="search by title"
             value={this.props.filters.text}
             onChange={this.onTextChange}
           />
