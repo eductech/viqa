@@ -23,7 +23,7 @@ import { firebase } from "./firebase/firebase";
 // components
 import LoadingPage from "./components/LoadingPage";
 
-const store = configureStore();
+export const store = configureStore();
 import { startAddEquipment } from "./actions/equipmentActions";
 
 const jsx = (
@@ -47,6 +47,8 @@ firebase.auth().onAuthStateChanged((user) => {
     store.dispatch(startSetEquipmentList()).then(() => {
       renderApp();
     });
+    console.log(store.getState());
+    
   } else {
     store.dispatch(signOut());
     renderApp();

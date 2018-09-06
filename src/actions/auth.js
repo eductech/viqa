@@ -1,4 +1,5 @@
 import { firebase, googleAuthProvider, githubAuthProvider } from "../firebase/firebase";
+import { store } from "../app";
 
 // SIGN IN
 // 1. email and password authentication
@@ -9,19 +10,23 @@ import { firebase, googleAuthProvider, githubAuthProvider } from "../firebase/fi
 // 4. handling account-exists-with-different-credential error
 // 5. ADD_PENDING_CRED_INFO
 // 6. REMOVE_PENDING_CRED_INFO
+// 7. ADD_ERROR
+// 8. REMOVE_ERROR
 //
 // SIGN OUT
-// 7. firebase sign out
-// 8. SIGN_OUT
+// 9. firebase sign out
+// 10. SIGN_OUT
 
 // 1.   email and password authentication
 // 1.1  email and password sign up
 export const startCreateUserWithEmailAndPassword = (email, password) => {
   return () => {
-    return firebase.auth().createUserWithEmailAndPassword(email, password).catch((err) => {
-      alert(err.message);
+    return firebase.auth().createUserWithEmailAndPassword(email, password).then((user) => {
+      if (store.auth.error) {
+        store.dispatch(removeError());
+      }
     }).catch((err) => {
-      alert(err.message);
+      store.dispatch(addError(err.message));
     });
   }
 };
@@ -35,8 +40,11 @@ export const startSignInWithEmailAndPassword = (email, password, pendingCredInfo
           dispatch(removePendingCredInfo())
         });
       }
+      if (store.getState().auth.error) {
+        store.dispatch(removeError());
+      }
     }).catch((err) => {
-      alert(err.message);
+      store.dispatch(addError(err.message));
     });
   }
 };
@@ -50,11 +58,16 @@ export const startSignInWithProvider = (provider, pendingCredInfo) => {
           dispatch(removePendingCredInfo())
         });
       }
+      console.log(store.getState());
+      
+      if (store.getState().auth.error) {
+        store.dispatch(removeError());
+      }
     }).catch((err) => {
       if (err.code === 'auth/account-exists-with-different-credential') {
         handleAcountExistsWithDifferentCredentialError(err, dispatch)
       } else {
-        alert(err.message);
+        store.dispatch(addError(err.message));
       }
     });
   }
@@ -101,14 +114,29 @@ export const removePendingCredInfo = () => {
   }
 }
 
-// 7. firebase sign out
+// ADD_ERROR
+export const addError = (error) => {
+  return {
+    type: 'ADD_ERROR',
+    error
+  }
+}
+
+// REMOVE_ERROR
+export const removeError = () => {
+  return {
+    type: 'REMOVE_ERROR'
+  }
+}
+
+// 9. firebase sign out
 export const startSignOut = () => {
   return () => {
     return firebase.auth().signOut();
   };
 };
 
-// 8. SIGN_OUT
+// 10. SIGN_OUT
 export const signOut = () => ({
   type: 'SIGN_OUT'
 });

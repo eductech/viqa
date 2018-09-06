@@ -1,7 +1,8 @@
 const authReducer = (
   state={
     uid: null,
-    pendingCredInfo: null
+    pendingCredInfo: null,
+    error: null
   }, 
   action
 ) => {
@@ -25,6 +26,16 @@ const authReducer = (
       return {
         ...state,
         pendingCredInfo: null
+      }
+    case 'ADD_ERROR':
+      return {
+        ...state,
+        error: action.error
+      }
+    case 'REMOVE_ERROR':
+      return {
+        ...state,
+        error: null
       }
     default:
       return state;

@@ -19,7 +19,7 @@ class AuthorizationComponent extends React.Component {
     password: '',
     mailValidationErrMsg: 'please enter your email',
     passwordValidationErrMsg: 'please enter your password',
-    showPassword: false
+    showPassword: false,
   }
 
   onShowPassword = () => {
@@ -39,9 +39,13 @@ class AuthorizationComponent extends React.Component {
 
   onPasswordChange = (e) => {
     const password = e.target.value;
+    this.validatePassword(password, this.state.registration);
+  }
+
+  validatePassword = (password, validateLength) => {
     if (!password) {
       this.setState({passwordValidationErrMsg: 'please enter your password', password});
-    } else if (this.state.registration && !password.match(/.{8,}/)) {
+    } else if (validateLength && !password.match(/.{8,}/)) {
       this.setState({passwordValidationErrMsg: 'password must be at least 8 characters long', 
         password});
     } else {
@@ -84,6 +88,7 @@ class AuthorizationComponent extends React.Component {
   onShowRegistrationForm = (registration) => {
     return () => {
       this.setState({registration});
+      this.validatePassword(this.state.password, registration);
     }
   }
 
