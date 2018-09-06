@@ -40,11 +40,16 @@ const renderApp = () => {
 
 ReactDOM.render(<LoadingPage />, document.getElementById('app'));
 
+const viewPortCalc = () => {
+  let vh = window.innerHeight * 0.01;
+  document.documentElement.style.setProperty('--vh', `${vh}px`);
+}
+
 firebase.auth().onAuthStateChanged((user) => {
   if (user) {
+    viewPortCalc();
     window.addEventListener('resize', () => {
-      let vh = window.innerHeight * 0.01;
-      document.documentElement.style.setProperty('--vh', `${vh}px`);
+      viewPortCalc();
     });
     store.dispatch(signIn(user.uid));
     store.dispatch(startSetEquipmentList()).then(() => {
