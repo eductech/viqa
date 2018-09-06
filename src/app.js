@@ -24,7 +24,6 @@ import { firebase } from "./firebase/firebase";
 import LoadingPage from "./components/LoadingPage";
 
 export const store = configureStore();
-import { startAddEquipment } from "./actions/equipmentActions";
 
 const jsx = (
   <Provider store={store}>
@@ -43,6 +42,10 @@ ReactDOM.render(<LoadingPage />, document.getElementById('app'));
 
 firebase.auth().onAuthStateChanged((user) => {
   if (user) {
+    window.addEventListener('resize', () => {
+      let vh = window.innerHeight * 0.01;
+      document.documentElement.style.setProperty('--vh', `${vh}px`);
+    });
     store.dispatch(signIn(user.uid));
     store.dispatch(startSetEquipmentList()).then(() => {
       renderApp();

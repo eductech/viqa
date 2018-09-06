@@ -43,7 +43,6 @@ class EquipmentListFilters extends React.Component {
           <p>Equipment search:</p>
           <input
             type="text"
-            autoFocus
             placeholder="search by title"
             value={this.props.filters.text}
             onChange={this.onTextChange}

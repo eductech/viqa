@@ -8,6 +8,7 @@ a.header-navlink:hover {
 
 .private-page {
   height: 100vh;
+  height: calc(var(--vh, 1vh) * 100);
 }
 
 .private-page__content {

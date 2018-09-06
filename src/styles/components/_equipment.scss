@@ -239,6 +239,14 @@
       }
     }
   }
+
+  @media (max-width: 515px) {
+    >* {
+      >p {
+        display: none;
+      }
+    }
+  }
 }
 
 .equipment-form {
