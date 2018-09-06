@@ -143,7 +143,7 @@ class AuthorizationComponent extends React.Component {
             <p className="text-center my-1">
               or
             </p>
-            <form onSubmit={this.onSubmitHandler(this.state.registration)}>
+            <form className="authorization__form" onSubmit={this.onSubmitHandler(this.state.registration)}>
               <div className="form-group">
                 <input 
                   className="form-control"
@@ -178,6 +178,7 @@ class AuthorizationComponent extends React.Component {
                   </small>
                 }
               </div>
+              {this.props.error && <p className="text-center text-danger">{this.props.error}</p>}
               <button type="submit" className="btn btn-primary"
                 disabled={this.state.mailValidationErrMsg || this.state.passwordValidationErrMsg}
               >
@@ -253,7 +254,8 @@ class AuthorizationComponent extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    pendingCredInfo: state.auth.pendingCredInfo
+    pendingCredInfo: state.auth.pendingCredInfo,
+    error: state.auth.error
   }
 };
 

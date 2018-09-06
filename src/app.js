@@ -46,9 +46,7 @@ firebase.auth().onAuthStateChanged((user) => {
     store.dispatch(signIn(user.uid));
     store.dispatch(startSetEquipmentList()).then(() => {
       renderApp();
-    });
-    console.log(store.getState());
-    
+    });  
   } else {
     store.dispatch(signOut());
     renderApp();

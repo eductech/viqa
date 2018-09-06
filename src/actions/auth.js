@@ -58,8 +58,6 @@ export const startSignInWithProvider = (provider, pendingCredInfo) => {
           dispatch(removePendingCredInfo())
         });
       }
-      console.log(store.getState());
-      
       if (store.getState().auth.error) {
         store.dispatch(removeError());
       }
