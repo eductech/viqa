@@ -2,14 +2,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-// app router
-import AppRouter from './router/AppRouter';
-
 // redux
 import { Provider } from 'react-redux';
 import configureStore from './store/configureStore';
-import { signOut, signIn } from "./actions/auth";
-import {startSetEquipmentList} from './actions/equipmentActions';
+import { signOut, signIn } from './actions/auth';
+import { startSetEquipmentList } from './actions/equipmentActions';
+
+// app router
+import AppRouter from './router/AppRouter';
 
 // styles
 import 'normalize.css/normalize.css';
@@ -18,10 +18,10 @@ import './styles/styles.scss';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
 
 // firebase
-import { firebase } from "./firebase/firebase";
+import { firebase } from './firebase/firebase';
 
 // components
-import LoadingPage from "./components/LoadingPage";
+import LoadingPage from './components/LoadingPage';
 
 export const store = configureStore();
 
@@ -41,9 +41,9 @@ const renderApp = () => {
 ReactDOM.render(<LoadingPage />, document.getElementById('app'));
 
 const viewPortCalc = () => {
-  let vh = window.innerHeight * 0.01;
+  const vh = window.innerHeight * 0.01;
   document.documentElement.style.setProperty('--vh', `${vh}px`);
-}
+};
 
 firebase.auth().onAuthStateChanged((user) => {
   if (user) {
@@ -54,7 +54,7 @@ firebase.auth().onAuthStateChanged((user) => {
     store.dispatch(signIn(user.uid));
     store.dispatch(startSetEquipmentList()).then(() => {
       renderApp();
-    });  
+    });
   } else {
     store.dispatch(signOut());
     renderApp();

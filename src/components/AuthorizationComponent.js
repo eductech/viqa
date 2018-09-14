@@ -1,15 +1,15 @@
 import React from 'react';
-import { connect } from "react-redux";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faGoogle, faGithub } from "@fortawesome/free-brands-svg-icons";
-import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+import { connect } from 'react-redux';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faGoogle, faGithub } from '@fortawesome/free-brands-svg-icons';
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 
 import { googleAuthProvider, githubAuthProvider } from '../firebase/firebase';
-import { 
+import {
   startCreateUserWithEmailAndPassword,
   startSignInWithEmailAndPassword,
   startSignInWithProvider,
-  removePendingCredInfo
+  removePendingCredInfo,
 } from '../actions/auth';
 
 class AuthorizationComponent extends React.Component {
@@ -23,17 +23,18 @@ class AuthorizationComponent extends React.Component {
   }
 
   onShowPassword = () => {
-    this.setState({showPassword: !this.state.showPassword});
+    const { showPassword } = this.state;
+    this.setState({ showPassword: !showPassword });
   }
 
   onMailChange = (e) => {
     const mail = e.target.value;
     if (!mail) {
-      this.setState({mailValidationErrMsg: 'please enter your email', mail});
+      this.setState({ mailValidationErrMsg: 'please enter your email', mail });
     } else if (!mail.match(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)) {
-      this.setState({mailValidationErrMsg: 'email must be valid', mail});
+      this.setState({ mailValidationErrMsg: 'email must be valid', mail });
     } else {
-      this.setState({mailValidationErrMsg: '', mail});
+      this.setState({ mailValidationErrMsg: '', mail });
     }
   }
 
@@ -44,25 +45,26 @@ class AuthorizationComponent extends React.Component {
 
   validatePassword = (password, validateLength) => {
     if (!password) {
-      this.setState({passwordValidationErrMsg: 'please enter your password', password});
+      this.setState({ passwordValidationErrMsg: 'please enter your password', password });
     } else if (validateLength && !password.match(/.{8,}/)) {
-      this.setState({passwordValidationErrMsg: 'password must be at least 8 characters long', 
-        password});
+      this.setState({ 
+        passwordValidationErrMsg: 'password must be at least 8 characters long',
+        password,
+      });
     } else {
-      this.setState({passwordValidationErrMsg: '', password});
+      this.setState({ passwordValidationErrMsg: '', password });
     }
   }
 
   onSubmitHandler = (registration) => {
-    const submitHandler = registration ? 
-      this.props.createUser : this.props.startSignIn;
+    const submitHandler = registration ? this.props.createUser : this.props.startSignIn;
     return (e) => {
       e.preventDefault();
-      let pendingCredInfoEmail = undefined;
+      let pendingCredInfoEmail;
       try {
         pendingCredInfoEmail = this.props.pendingCredInfo.email;
       } catch (error) {
-        
+        console.log(error);
       }
       !pendingCredInfoEmail ? (
         submitHandler(
@@ -76,7 +78,7 @@ class AuthorizationComponent extends React.Component {
           this.props.pendingCredInfo
         )
       );
-    }
+    };
   }
 
   onSignInWithProviderHandler = (provider) => {
@@ -87,7 +89,7 @@ class AuthorizationComponent extends React.Component {
 
   onShowRegistrationForm = (registration) => {
     return () => {
-      this.setState({registration});
+      this.setState({ registration });
       this.validatePassword(this.state.password, registration);
     }
   }
@@ -98,7 +100,7 @@ class AuthorizationComponent extends React.Component {
         {!this.props.pendingCredInfo ? (
           <div>
             <div className="d-flex justify-content-around">
-              <button 
+              <button
                 className={
                             `btn btn-outline-primary btn-block mx-4 
                             ${this.state.registration ? 'active' : ''}`
@@ -145,7 +147,7 @@ class AuthorizationComponent extends React.Component {
             </p>
             <form className="authorization__form" onSubmit={this.onSubmitHandler(this.state.registration)}>
               <div className="form-group">
-                <input 
+                <input
                   className="form-control"
                   type="text" placeholder="email"
                   onChange={this.onMailChange}
@@ -159,7 +161,7 @@ class AuthorizationComponent extends React.Component {
               </div>
               <div className="form-group">
                 <div className="input-group">
-                  <input 
+                  <input
                     className="form-control"
                     type={this.state.showPassword ? "text" : "password"} 
                     placeholder="password"
